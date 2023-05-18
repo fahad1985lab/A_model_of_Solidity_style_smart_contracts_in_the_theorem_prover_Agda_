@@ -37,10 +37,6 @@ updateCounterAux2 s otherwise msg₂ = return 1 (nat 17)
 
 
 --increment function
--- incrementAux (theMsg (nat n)) sets the counter to n + 1
---
--- it would be clearer to define a setCounter function
---  setCounter (theMsg (nat n)) sets the counter to n
 incrementAux : MsgOrError → Prog Msg
 incrementAux (theMsg (nat n)) = (exec (updatec "counter" (λ _ → λ msg → theMsg (nat (suc n))) λ f → 1)
                                                          (λ n → 1)) λ x → return 1 (nat (suc n))
@@ -62,16 +58,14 @@ deleteVoterAux ow ow' ow'' = err (strErr " You cannot delete voter ")
 
 
 
--- the function below we use it in case to check voter is allowed to vote or not 
+-- the function below we use it in case to check voter is allowed to vote or not
+-- in case nat 0 or otherwise it will return error and not allow to vote
+-- in case suc (nat n) it will allow to vote and it will call incrementAux to increment the counter
 voteAux : MsgOrError → Prog Msg
-{- first case: the voter is NOT allowed to vote -}
 voteAux (theMsg (nat zero)) = error (strErr "The message is zero") ⟨ 0 >> 0 ∙ " Voter is not allowed to vote " [ nat 0 ]⟩
-{- first case: the voter is allowed to vote -}
 voteAux (theMsg (nat (suc n))) = (exec (callPure 5 "counter" (nat 0)) (λ result → 1))
                                   λ msg → incrementAux msg
-  {- values before  need to be revised, you need to add more arguments to voteAux0  -}
 voteAux (theMsg ow) = error (strErr " The message is not a number ") ⟨ 0 >> 0 ∙ " Voter is not allowed to vote " [ nat 0 ]⟩
-  {- values before  need to be revised, you need to add more arguments to voteAux0  -}
 voteAux (err x) = error (strErr " Undefined ") ⟨ 0 >> 0 ∙ " The message is undefined " [ nat 0 ]⟩
 
 
