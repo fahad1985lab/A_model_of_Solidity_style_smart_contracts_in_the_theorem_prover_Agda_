@@ -96,6 +96,9 @@ testLedger 1 .fun "vote" msg = exec callAddrLookupc  (λ _ → 1)
 -- in case to check voter
 testLedger 1 .purefunction "checkVoter" msg = theMsg (nat 0)
 
+-- in case to increment our counter
+testLedger 1 .purefunction "counter" msg = theMsg (nat 0)
+
 -- for other cases
 testLedger ow .amount = 0
 testLedger ow .fun ow' ow'' = error (strErr "Undefined") ⟨ ow >> ow ∙ ow' [ ow'' ]⟩
