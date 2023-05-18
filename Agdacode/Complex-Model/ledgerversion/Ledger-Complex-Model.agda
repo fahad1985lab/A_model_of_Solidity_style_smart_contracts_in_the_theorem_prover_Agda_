@@ -304,9 +304,9 @@ stepEFAuxCompare oldLedger (stateEF ledger executionStack initialAddr lastCallAd
 
 
 stepEFwithGasError : (oldLedger : Ledger) → (statefun : StateExecFun) → StateExecFun
-stepEFwithGasError oldLedger evals  = stepEFAuxCompare oldLedger evals
-                                      (compareLeq (stepEFgasNeeded evals)
-                                      (stepEFgasAvailable evals))
+stepEFwithGasError oldLedger statefun  = stepEFAuxCompare oldLedger statefun
+                                      (compareLeq (stepEFgasNeeded statefun)
+                                      (stepEFgasAvailable statefun))
 
 
 
