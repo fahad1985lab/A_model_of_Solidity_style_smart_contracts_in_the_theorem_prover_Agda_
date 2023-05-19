@@ -1,4 +1,4 @@
-# A model of Solidity style smart contracts in the theorem prover Agda
+# A model of the Solidity-style smart contracts in the theorem prover Agda
 
 
 ## Code in Agda
