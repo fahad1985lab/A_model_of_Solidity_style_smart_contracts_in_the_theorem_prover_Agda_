@@ -31,7 +31,7 @@ record Contract : Set where
   constructor contract
   field
     amount   : Amount
-    fun  : FunctionName → FunDef  
+    fun  : FunctionName → (Msg → SmartContractExec Msg)  
     purefunction : FunctionName → Msg → MsgOrError  --this one will change because in ether the function no change only the variable can change
    
 
@@ -51,7 +51,7 @@ record ExecStackEl : Set where
   field
     lastCallAddress : Address   -- the address which made the call to the current function call
     calledAddress   : Address   -- is the address to which the last current function call was made from lastCallAddr
-    continuation  : FunDef -- continuation how to proceed once a result is returned, which depends on that result which is an element of Msg
+    continuation  : Msg → SmartContractExec Msg -- continuation how to proceed once a result is returned, which depends on that result which is an element of Msg
     costCont  : Msg → ℕ -- Cost for continuation depending on the msg returned when the current call is finished
 -- The following two elements are only for debugging purposes so that in case of an error
     funcNameexecStackEl  : FunctionName     --functionanme is the name of the function which was called
@@ -67,7 +67,7 @@ ExecutionStack = List ExecStackEl
 
 
 
-
+-- definition of state execution function
 record StateExecFun : Set where
   constructor stateEF
   field
@@ -76,7 +76,7 @@ record StateExecFun : Set where
     initialAddr :  Address -- the address which initiated everything
     lastCallAddr    : Address -- the address which made the call to the current function call
     calledAddr : Address   -- is the address to which the last current fucntion call was made from lastCallAddr
-    nextstep  : Prog Msg   -- next step in the program to be executed when
+    nextstep  : SmartContractExec Msg   -- next step in the program to be executed when
     gasLeft   : ℕ  -- how much we have left in the next execution step
 
 --these info regarding debug info :

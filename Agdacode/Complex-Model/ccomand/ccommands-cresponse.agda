@@ -32,7 +32,7 @@ mutual
     getAmountc : Address → CCommands
     raiseException : ℕ → String → CCommands --==> we used error instead of it
     
-
+-- contract-responses:
   CResponse : CCommands → Set
   CResponse (updatec fname fdef cost) = ⊤
   CResponse currentAddrLookupc = Address
@@ -46,27 +46,27 @@ mutual
 
 
 
---Prog is datatype of what happens when a function is applied to its arguments.
---Prog --> Prog
-  data Prog (A : Set) : Set where
-    return : ℕ → A → Prog A
-    error  : ErrorMsg →  DebugInfo → Prog A
-    exec  : (c : CCommands) → (CResponse c →  ℕ) → (CResponse c → Prog A) → Prog A
+--SmartContractExec is datatype of what happens when a function is applied to its arguments.
+
+  data SmartContractExec (A : Set) : Set where
+    return : ℕ → A → SmartContractExec A
+    error  : ErrorMsg →  DebugInfo → SmartContractExec A
+    exec  : (c : CCommands) → (CResponse c →  ℕ) → (CResponse c → SmartContractExec A) → SmartContractExec A
 
 
-
+{-
   FunDef : Set
-  FunDef = Msg → Prog Msg --Prog Msg
+  FunDef = Msg → SmartContractExec Msg --Prog Msg
+-}
 
 
-
-_>>=_ : {A B : Set} → Prog A → (A → Prog B) → Prog B
+_>>=_ : {A B : Set} → SmartContractExec A → (A → SmartContractExec B) → SmartContractExec B
 return n x >>= q    = q x
 error x z >>= q     = error x z
 exec c n x >>= q  = exec c n (λ r → x r >>= q)
 
 
-_>>_ : {A B : Set} → Prog A → Prog B → Prog B
+_>>_ : {A B : Set} → SmartContractExec A → SmartContractExec B → SmartContractExec B
 return n x >> q   = q
 error x z >> q    = error x z
 exec c n x >> q = exec c n (λ r → x r >> q)

@@ -34,7 +34,7 @@ open import Simple-Model.ledgerversion.Ledger-Simple-Model
 
 open import Simple-Model.ledgerversion.Ledger-Simple-Model
 
--- A count example
+-- An example of an increment counter
 
 open import Simple-Model.example.examplecounter
 
@@ -51,7 +51,7 @@ open import Simple-Model.library-simple-model.basicDataStructureWithSimpleModel
 
 open import Complex-Model.ledgerversion.Ledger-Complex-Model
 
--- comands and response
+-- commands and responses
 
 open import Complex-Model.ccomand.ccommands-cresponse
 

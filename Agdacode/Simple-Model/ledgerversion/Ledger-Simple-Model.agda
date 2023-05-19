@@ -30,7 +30,7 @@ mutual
     transferc : Amount → Address →  CCommands
     getAmountc : Address → CCommands
 
--- smart contract response
+-- smart contract responses:
   CResponse : CCommands → Set
   CResponse (updatec fname fdef) = ⊤
   CResponse currentAddrLookupc = Address
@@ -40,8 +40,8 @@ mutual
   CResponse (transferc amount addr) = ⊤
 
 
---Prog is datatype of what happens when a function is applied to its arguments.
---Prog --> Prog
+--SmartContractExec is datatype of what happens when a function is applied to its arguments.
+
   data SmartContractExec (A : Set) : Set where
     return : A → SmartContractExec A
     error  : ErrorMsg →  SmartContractExec A
@@ -98,7 +98,7 @@ transfer amount addr =  exec (transferc amount addr) return
 
 
 
-
+-- definition of execution stack elements
 record ExecStackEl : Set where
   constructor execStackEl
   field
@@ -109,7 +109,7 @@ open ExecStackEl public
 
 
 
-
+-- defintion of execution stack function
 ExecutionStack : Set
 ExecutionStack = List ExecStackEl
 
@@ -117,7 +117,7 @@ ExecutionStack = List ExecStackEl
 
 
 
-{- EvalState is an intermediate state when we are evaluating a function call
+{- StateExecFun (state execution function) is an intermediate state when we are evaluating a function call
    in a contract
    it consists of
         - the ledger  (which might changed because of updates)
@@ -161,7 +161,7 @@ updateLedgerAmount ledger currentAddr newAddr amount' correctAmount addr .fun =
     ledger addr .fun
 
 
-
+-- definition of execute transfer auxiliary
 executeTransferAux : (oldLedger currentLedger : Ledger)
                   → (executionStack : ExecutionStack)
                   → (callAddr currentAddr : Address)
@@ -178,7 +178,7 @@ executeTransferAux oldLedger currentLedger executionStack callAddr currentAddr a
          stateEF oldLedger executionStack callAddr currentAddr
              (error (strErr "not enough money"))
 
-
+-- definition of execute transfer
 executeTransfer : (oldLedger currentLedger : Ledger)
                   → ExecutionStack
                   → (callAddr currentAddr : Address)
@@ -190,7 +190,7 @@ executeTransfer oldLedger currentLedger exexecutionStack callAddr currentAddr am
                 = executeTransferAux oldLedger currentLedger exexecutionStack callAddr currentAddr amount'
                    destinationAddr cont  (compareLeq amount' (currentLedger currentAddr .amount  ))
 
-
+-- definition of stepEF
 stepEF : Ledger → StateExecFun → StateExecFun
 stepEF oldLedger (stateEF currentLedger [] callAddr currentAddr (return result))
        = stateEF currentLedger  [] callAddr currentAddr (return result)
@@ -216,7 +216,7 @@ stepEF oldLedger (stateEF currentLedger executionStack callAddr currentAddr (err
        = stateEF oldLedger executionStack callAddr currentAddr (error errorMsg)
 
 
-
+-- definition of stepEFntimes
 stepEFntimes : Ledger → StateExecFun → ℕ → StateExecFun
 stepEFntimes oldLedger ledgerstateexecfun 0
              = ledgerstateexecfun
