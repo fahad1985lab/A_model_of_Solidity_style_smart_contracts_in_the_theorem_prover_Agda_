@@ -3,7 +3,7 @@
 
 ## Code in Agda
 * All Agda Code
-  [Agdacode](/Agdacode/)
+  [Agdacode](/Agdacode/) 
 
   
 * The file  [guidelines.agda](Agdacode/guidelines.agda/) shows the code in the order as it appears in the paper.
