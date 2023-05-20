@@ -76,8 +76,6 @@ testLedger ow .fun ow' ow'' = error (strErr "Undefined")
 
 
 
--- test cases below
-
 -- test the ledger above
 test : NatOrError
 test = evaluateNonTerminating testLedger 0 0 "f1" (nat 0) 

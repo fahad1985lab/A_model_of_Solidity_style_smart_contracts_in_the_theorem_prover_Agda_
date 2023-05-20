@@ -26,7 +26,7 @@ open import Complex-Model.ccomand.ccommands-cresponse
 call : (addr : Address)  → FunctionName → (Msg → ℕ) → (Msg → SmartContractExec Msg)
 call addr fname cost msg  = exec (callc addr fname msg) (costcallc param) λ r → return (cost r) r  
 
-update : FunctionName → (Msg → SmartContractExec Msg) → (cost₁  cost₂ : ℕ ) → SmartContractExec ⊤
+update : FunctionName → (Msg → MsgOrError) → (cost₁  cost₂ : ℕ ) → SmartContractExec ⊤
 update fname fdef cost₁ cost₂ = exec (updatec fname (λ _ fdef → theMsg fdef) λ _ → cost₁) (λ _ → cost₁) (return cost₂) 
 
 currentAddrLookup : (cost : Address → ℕ) → SmartContractExec Address

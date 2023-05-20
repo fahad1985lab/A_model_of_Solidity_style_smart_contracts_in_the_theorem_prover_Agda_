@@ -20,7 +20,7 @@ open import libraries.natCompare
 
 mutual
 
-  -- contract-comands:
+  -- contract-commands:
   data CCommands : Set where
     updatec : FunctionName → ((Msg → MsgOrError) → (Msg → MsgOrError))
             → ((Msg → MsgOrError) → ℕ) → CCommands
@@ -32,7 +32,7 @@ mutual
     getAmountc : Address → CCommands
     raiseException : ℕ → String → CCommands --==> we used error instead of it
     
--- contract-responses:
+-- contract-responses
   CResponse : CCommands → Set
   CResponse (updatec fname fdef cost) = ⊤
   CResponse currentAddrLookupc = Address
@@ -47,17 +47,12 @@ mutual
 
 
 --SmartContractExec is datatype of what happens when a function is applied to its arguments.
-
+--SmartContractExec --> SmartContractExec
   data SmartContractExec (A : Set) : Set where
     return : ℕ → A → SmartContractExec A
     error  : ErrorMsg →  DebugInfo → SmartContractExec A
     exec  : (c : CCommands) → (CResponse c →  ℕ) → (CResponse c → SmartContractExec A) → SmartContractExec A
 
-
-{-
-  FunDef : Set
-  FunDef = Msg → SmartContractExec Msg --Prog Msg
--}
 
 
 _>>=_ : {A B : Set} → SmartContractExec A → (A → SmartContractExec B) → SmartContractExec B

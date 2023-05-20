@@ -30,12 +30,6 @@ initialfun (nat n) = theMsg (nat 0)
 initialfun owmsg   = err (strErr " The message is not a number ")
 
 
-updateCounterAux2 : String → Msg → (Msg → SmartContractExec Msg)
-updateCounterAux2 s (nat n) msg₁ = exec (updatec "counter" (λ x x₁ → initialfun (nat n)) λ x → 1) (λ _ → 1)
-                                 λ result →  return 1 (nat (suc n )) 
-updateCounterAux2 s otherwise msg₂ = return 1 (nat 17)
-
-
 --increment function
 incrementAux : MsgOrError → SmartContractExec Msg
 incrementAux (theMsg (nat n)) = (exec (updatec "counter" (λ _ → λ msg → theMsg (nat (suc n))) λ f → 1)

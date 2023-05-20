@@ -130,8 +130,8 @@ record StateExecFun : Set where
   field
     ledger : Ledger
     executionStack : ExecutionStack
-    callAddress    : Address
-    currentAddress : Address  
+    callAddress        : Address
+    currentAddress        : Address  
     nextstep       : SmartContractExec Msg
 open StateExecFun public
 
@@ -180,7 +180,7 @@ executeTransferAux oldLedger currentLedger executionStack callAddr currentAddr a
          stateEF oldLedger executionStack callAddr currentAddr
              (error (strErr "not enough money"))
 
--- Execute transfer
+
 executeTransfer : (oldLedger currentLedger : Ledger)
                   → ExecutionStack
                   → (callAddr currentAddr : Address)

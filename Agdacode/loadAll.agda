@@ -6,7 +6,7 @@ module loadAll (param : ConstantParameters) where
 
 -- This file is guidelines for the code contained in the paper.
 -- The authors:  Fahad Alhabardi and Anton Setzer
--- The title of the paper: A model of Solidity style smart contracts in the theorem prover Agda
+-- The title of the paper: A model of the Solidity-style smart contracts in the theorem prover Agda
 
 
                 ----------------------
@@ -57,11 +57,6 @@ open import Simple-Model.library-simple-model.basicDataStructureWithSimpleModel
 
 open import Complex-Model.ledgerversion.Ledger-Complex-Model
 
--- A voting example
-
-open import Complex-Model.example.votingexample
-
-
 -- do notation
 
 open import Complex-Model.ccomand.do-notation
@@ -72,8 +67,14 @@ open import Complex-Model.ccomand.do-notation
 open import Complex-Model.ccomand.ccommands-cresponse
 
 
+-- A voting example
+
+open import Complex-Model.example.votingexample
 
 
+-- Executed voting example
+
+open import Complex-Model.example.executedvotingexample
 
 
 

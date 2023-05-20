@@ -80,8 +80,7 @@ record StateIO  : Set  where
         ledger     : Ledger
         initialAddr : Address
         gas        : ℕ
-        directlyExecutableFunction : String → Msg → (Msg → SmartContractExec Msg)
-        --directlyExecutableFunction : String → Msg → (Msg → MsgOrError)
+        directlyExecutableFunction : String → Msg → (Msg → MsgOrError)      
 open StateIO public
 
 

@@ -313,7 +313,7 @@ stepEFwithGasError oldLedger statefun  = stepEFAuxCompare oldLedger statefun
 
 
 
-
+-- definition of stepEFntimes
 stepEFntimes : Ledger → StateExecFun → (ntimes : ℕ) → StateExecFun
 stepEFntimes oldLedger ledgerstateexecfun 0
              = ledgerstateexecfun
@@ -322,7 +322,7 @@ stepEFntimes oldLedger ledgerstateexecfun (suc n)
                      
 
 
-
+-- definition of stepEFntimes list
 stepEFntimesList : Ledger → StateExecFun → (ntimes : ℕ) → List StateExecFun
 stepEFntimesList oldLedger ledgerstateexecfun 0
                  = ledgerstateexecfun ∷ []

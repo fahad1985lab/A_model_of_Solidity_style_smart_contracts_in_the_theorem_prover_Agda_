@@ -6,7 +6,7 @@ module guidelines (param : ConstantParameters) where
 
 -- This file is guidelines for the code contained in the paper.
 -- The authors:  Fahad Alhabardi and Anton Setzer
--- The title of the paper: A model of Solidity style smart contracts in the theorem prover Agda
+-- The title of the paper: A model of the Solidity-style smart contracts in the theorem prover Agda
 -- All files have been checked and worked
 
 
@@ -18,6 +18,7 @@ module guidelines (param : ConstantParameters) where
 -- Sect III. A BRIEF BACKGROUND ON AGDA PROOF ASSISTANT AND ETHEREUM
 
 --- Subsection A. A brief overview into Theorem prover Agda
+
 open import Simple-Model.ledgerversion.Ledger-Simple-Model
 
 
@@ -34,7 +35,7 @@ open import Simple-Model.ledgerversion.Ledger-Simple-Model
 
 open import Simple-Model.ledgerversion.Ledger-Simple-Model
 
--- An example of an increment counter
+-- An example of an increment
 
 open import Simple-Model.example.examplecounter
 
@@ -59,7 +60,9 @@ open import Complex-Model.ccomand.ccommands-cresponse
 
 open import Complex-Model.example.votingexample
 
+-- Executed voting example
 
+open import Complex-Model.example.executedvotingexample
 
 -- Sect V. CONCLUSION AND FUTURE WORK
 
