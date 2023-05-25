@@ -1,4 +1,0 @@
-name: phdprojectinAgda
-depend: standard-library
-include: .
-flags: --sized-types --guardedness 
