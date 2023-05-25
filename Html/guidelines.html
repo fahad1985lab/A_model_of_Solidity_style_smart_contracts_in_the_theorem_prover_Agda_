@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>guidelines</title><link rel="stylesheet" href="Agda.css"></head><body><pre class="Agda"><a id="1" class="Keyword">open</a> <a id="6" class="Keyword">import</a> <a id="13" href="constantparameters.html" class="Module">constantparameters</a>
+
+
+<a id="34" class="Keyword">module</a> <a id="41" href="guidelines.html" class="Module">guidelines</a> <a id="52" class="Symbol">(</a><a id="53" href="guidelines.html#53" class="Bound">param</a> <a id="59" class="Symbol">:</a> <a id="61" href="constantparameters.html#275" class="Record">ConstantParameters</a><a id="79" class="Symbol">)</a> <a id="81" class="Keyword">where</a>
+
+
+<a id="89" class="Comment">-- This file is guidelines for the code contained in the paper.</a>
+<a id="153" class="Comment">-- The authors:  Fahad Alhabardi and Anton Setzer</a>
+<a id="203" class="Comment">-- The title of the paper: A model of the Solidity-style smart contracts in the theorem prover Agda</a>
+<a id="303" class="Comment">-- All files have been checked and worked</a>
+
+
+<a id="347" class="Comment">-- Sect I INTRODUCTION</a>
+
+<a id="371" class="Comment">-- Sect II RELATED WORK</a>
+
+
+<a id="397" class="Comment">-- Sect III. A BRIEF BACKGROUND ON AGDA PROOF ASSISTANT AND ETHEREUM</a>
+
+<a id="467" class="Comment">--- Subsection A. A brief overview into Theorem prover Agda</a>
+
+<a id="528" class="Keyword">open</a> <a id="533" class="Keyword">import</a> <a id="540" href="Simple-Model.ledgerversion.Ledger-Simple-Model.html" class="Module">Simple-Model.ledgerversion.Ledger-Simple-Model</a>
+
+
+<a id="589" class="Comment">--- Subsection B. A brief overview on Ethereum</a>
+
+
+
+
+<a id="640" class="Comment">-- Sect IV. MODELLING OF SOLIDITY SMART CONTRACTS IN AGDA</a>
+
+<a id="699" class="Comment">--- Subsection A. Simple model of Solidity smart contracts in Agda</a>
+
+<a id="767" class="Comment">-- Ledger</a>
+
+<a id="778" class="Keyword">open</a> <a id="783" class="Keyword">import</a> <a id="790" href="Simple-Model.ledgerversion.Ledger-Simple-Model.html" class="Module">Simple-Model.ledgerversion.Ledger-Simple-Model</a>
+
+<a id="838" class="Comment">-- An example of an increment</a>
+
+<a id="869" class="Keyword">open</a> <a id="874" class="Keyword">import</a> <a id="881" href="Simple-Model.example.examplecounter.html" class="Module">Simple-Model.example.examplecounter</a>
+
+<a id="918" class="Comment">--Library</a>
+
+<a id="929" class="Keyword">open</a> <a id="934" class="Keyword">import</a> <a id="941" href="Simple-Model.library-simple-model.basicDataStructureWithSimpleModel.html" class="Module">Simple-Model.library-simple-model.basicDataStructureWithSimpleModel</a>
+
+
+
+
+<a id="1013" class="Comment">--- Subsection B. Complex model of solidity smart contracts in Agda</a>
+
+<a id="1082" class="Comment">-- Ledger</a>
+
+<a id="1093" class="Keyword">open</a> <a id="1098" class="Keyword">import</a> <a id="1105" href="Complex-Model.ledgerversion.Ledger-Complex-Model.html" class="Module">Complex-Model.ledgerversion.Ledger-Complex-Model</a>
+
+<a id="1155" class="Comment">-- commands and responses</a>
+
+<a id="1182" class="Keyword">open</a> <a id="1187" class="Keyword">import</a> <a id="1194" href="Complex-Model.ccomand.ccommands-cresponse.html" class="Module">Complex-Model.ccomand.ccommands-cresponse</a>
+
+<a id="1237" class="Comment">-- A voting example</a>
+
+<a id="1258" class="Keyword">open</a> <a id="1263" class="Keyword">import</a> <a id="1270" href="Complex-Model.example.votingexample.html" class="Module">Complex-Model.example.votingexample</a>
+
+<a id="1307" class="Comment">-- Executed voting example</a>
+
+<a id="1335" class="Keyword">open</a> <a id="1340" class="Keyword">import</a> <a id="1347" href="Complex-Model.example.executedvotingexample.html" class="Module">Complex-Model.example.executedvotingexample</a>
+
+<a id="1392" class="Comment">-- Sect V. CONCLUSION AND FUTURE WORK</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre></body></html>
