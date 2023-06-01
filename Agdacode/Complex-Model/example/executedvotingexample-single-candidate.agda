@@ -1,6 +1,6 @@
 open import constantparameters
 
-module Complex-Model.example.executedvotingexample  where
+module Complex-Model.example.executedvotingexample-single-candidate  where
 open import Data.List
 open import Data.Bool.Base 
 open import Agda.Builtin.Unit
@@ -24,7 +24,7 @@ open import Complex-Model.ledgerversion.Ledger-Complex-Model exampleParameters
 open import Complex-Model.ccomand.ccommands-cresponse
 open import basicDataStructure
 open import libraries.Mainlibrary
-open import Complex-Model.example.votingexample
+open import Complex-Model.example.votingexample-single-candidate
 
 
 

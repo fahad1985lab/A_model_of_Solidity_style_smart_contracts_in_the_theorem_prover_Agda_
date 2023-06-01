@@ -67,14 +67,26 @@ open import Complex-Model.ccomand.do-notation
 open import Complex-Model.ccomand.ccommands-cresponse
 
 
--- A voting example
+-- A voting example for single candidate
 
-open import Complex-Model.example.votingexample
+open import Complex-Model.example.votingexample-single-candidate
+
+-- Executed voting example for single candidate
+
+open import Complex-Model.example.votingexample-single-candidate
 
 
--- Executed voting example
 
-open import Complex-Model.example.executedvotingexample
+-- a more democratic one with multiple candidates
+
+-- A voting example for multiple candidates
+
+open import Complex-Model.example.votingexample-multi-candidates
+
+-- Executed voting example for multiple candidates
+
+open import Complex-Model.example.executedvotingexample-multi-candidates
+
 
 
 

@@ -1,0 +1,262 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Complex-Model.example.executedvotingexample-multi-candidates</title><link rel="stylesheet" href="Agda.css"></head><body><pre class="Agda"><a id="1" class="Keyword">open</a> <a id="6" class="Keyword">import</a> <a id="13" href="constantparameters.html" class="Module">constantparameters</a>
+
+<a id="33" class="Keyword">module</a> <a id="40" href="Complex-Model.example.executedvotingexample-multi-candidates.html" class="Module">Complex-Model.example.executedvotingexample-multi-candidates</a>  <a id="102" class="Keyword">where</a>
+<a id="108" class="Keyword">open</a> <a id="113" class="Keyword">import</a> <a id="120" href="Data.List.html" class="Module">Data.List</a>
+<a id="130" class="Keyword">open</a> <a id="135" class="Keyword">import</a> <a id="142" href="Data.Bool.Base.html" class="Module">Data.Bool.Base</a> 
+<a id="158" class="Keyword">open</a> <a id="163" class="Keyword">import</a> <a id="170" href="Agda.Builtin.Unit.html" class="Module">Agda.Builtin.Unit</a>
+<a id="188" class="Keyword">open</a> <a id="193" class="Keyword">import</a> <a id="200" href="Data.Product.html" class="Module">Data.Product</a> <a id="213" class="Keyword">renaming</a> <a id="222" class="Symbol">(</a><a id="223" href="Agda.Builtin.Sigma.html#236" class="InductiveConstructor Operator">_,_</a> <a id="227" class="Symbol">to</a> <a id="230" class="InductiveConstructor Operator">_,,_</a> <a id="235" class="Symbol">)</a>
+<a id="237" class="Keyword">open</a> <a id="242" class="Keyword">import</a> <a id="249" href="Data.Maybe.html" class="Module">Data.Maybe</a> <a id="260" class="Keyword">hiding</a> <a id="267" class="Symbol">(</a><a id="268" href="Data.Maybe.Base.html#2227" class="Function Operator">_&gt;&gt;=_</a><a id="273" class="Symbol">)</a>
+<a id="275" class="Keyword">open</a> <a id="280" class="Keyword">import</a> <a id="287" href="Data.Nat.Base.html" class="Module">Data.Nat.Base</a> 
+<a id="302" class="Keyword">open</a> <a id="307" class="Keyword">import</a> <a id="314" href="Data.Nat.Show.html" class="Module">Data.Nat.Show</a>
+<a id="328" class="Keyword">open</a> <a id="333" class="Keyword">import</a> <a id="340" href="Data.Fin.Base.html" class="Module">Data.Fin.Base</a> <a id="354" class="Keyword">hiding</a> <a id="361" class="Symbol">(</a><a id="362" href="Data.Fin.Base.html#5404" class="Function Operator">_+_</a><a id="365" class="Symbol">;</a> <a id="367" href="Data.Fin.Base.html#5540" class="Function Operator">_-_</a><a id="370" class="Symbol">)</a>
+<a id="372" class="Keyword">import</a> <a id="379" href="Relation.Binary.PropositionalEquality.html" class="Module">Relation.Binary.PropositionalEquality</a> <a id="417" class="Symbol">as</a> <a id="420" class="Module">Eq</a>
+<a id="423" class="Keyword">open</a> <a id="428" href="Relation.Binary.PropositionalEquality.html" class="Module">Eq</a> <a id="431" class="Keyword">using</a> <a id="437" class="Symbol">(</a><a id="438" href="Agda.Builtin.Equality.html#151" class="Datatype Operator">_≡_</a> <a id="442" class="Symbol">;</a> <a id="444" href="Agda.Builtin.Equality.html#208" class="InductiveConstructor">refl</a> <a id="449" class="Symbol">;</a> <a id="451" href="Relation.Binary.PropositionalEquality.Core.html#1684" class="Function">sym</a> <a id="455" class="Symbol">;</a> <a id="457" href="Relation.Binary.PropositionalEquality.Core.html#1130" class="Function">cong</a><a id="461" class="Symbol">)</a>
+<a id="463" class="Keyword">open</a> <a id="468" class="Keyword">import</a> <a id="475" href="Agda.Builtin.Nat.html" class="Module">Agda.Builtin.Nat</a> <a id="492" class="Keyword">using</a> <a id="498" class="Symbol">(</a><a id="499" href="Agda.Builtin.Nat.html#415" class="Primitive Operator">_-_</a><a id="502" class="Symbol">;</a> <a id="504" href="Agda.Builtin.Nat.html#528" class="Primitive Operator">_*_</a><a id="507" class="Symbol">)</a>
+<a id="509" class="Keyword">open</a> <a id="514" class="Keyword">import</a> <a id="521" href="Data.String.html" class="Module">Data.String</a> <a id="533" class="Keyword">hiding</a> <a id="540" class="Symbol">(</a><a id="541" href="Data.String.Base.html#2430" class="Function">length</a><a id="547" class="Symbol">;</a> <a id="549" href="Data.String.Base.html#1561" class="Primitive">show</a><a id="553" class="Symbol">)</a> <a id="555" class="Keyword">renaming</a> <a id="564" class="Symbol">(</a><a id="565" href="Data.String.Base.html#2366" class="Function Operator">_++_</a> <a id="570" class="Symbol">to</a> <a id="573" class="Function Operator">_++str_</a><a id="580" class="Symbol">)</a>
+<a id="582" class="Keyword">open</a> <a id="587" class="Keyword">import</a> <a id="594" href="Data.Unit.html" class="Module">Data.Unit</a>
+<a id="604" class="Keyword">open</a> <a id="609" class="Keyword">import</a> <a id="616" href="Data.Empty.html" class="Module">Data.Empty</a>
+
+
+
+<a id="630" class="Comment">--our work</a>
+<a id="641" class="Keyword">open</a> <a id="646" class="Keyword">import</a>  <a id="654" href="libraries.natCompare.html" class="Module">libraries.natCompare</a>
+<a id="675" class="Keyword">open</a> <a id="680" class="Keyword">import</a> <a id="687" href="Complex-Model.ledgerversion.Ledger-Complex-Model.html" class="Module">Complex-Model.ledgerversion.Ledger-Complex-Model</a> <a id="736" href="constantparameters.html#969" class="Function">exampleParameters</a>
+<a id="754" class="Keyword">open</a> <a id="759" class="Keyword">import</a> <a id="766" href="Complex-Model.ccomand.ccommands-cresponse.html" class="Module">Complex-Model.ccomand.ccommands-cresponse</a>
+<a id="808" class="Keyword">open</a> <a id="813" class="Keyword">import</a> <a id="820" href="basicDataStructure.html" class="Module">basicDataStructure</a>
+<a id="839" class="Keyword">open</a> <a id="844" class="Keyword">import</a> <a id="851" href="libraries.Mainlibrary.html" class="Module">libraries.Mainlibrary</a>
+<a id="873" class="Keyword">open</a> <a id="878" class="Keyword">import</a> <a id="885" href="Complex-Model.example.votingexample-multi-candidates.html" class="Module">Complex-Model.example.votingexample-multi-candidates</a>
+
+
+<a id="IsJust"></a><a id="940" href="Complex-Model.example.executedvotingexample-multi-candidates.html#940" class="Function">IsJust</a> <a id="947" class="Symbol">:</a> <a id="949" class="Symbol">{</a><a id="950" href="Complex-Model.example.executedvotingexample-multi-candidates.html#950" class="Bound">A</a> <a id="952" class="Symbol">:</a> <a id="954" href="Agda.Primitive.html#326" class="Primitive">Set</a><a id="957" class="Symbol">}</a> <a id="959" class="Symbol">→</a> <a id="961" href="Agda.Builtin.Maybe.html#136" class="Datatype">Maybe</a> <a id="967" href="Complex-Model.example.executedvotingexample-multi-candidates.html#950" class="Bound">A</a> <a id="969" class="Symbol">→</a> <a id="971" href="Agda.Primitive.html#326" class="Primitive">Set</a>
+<a id="975" href="Complex-Model.example.executedvotingexample-multi-candidates.html#940" class="Function">IsJust</a> <a id="982" class="Symbol">(</a><a id="983" href="Agda.Builtin.Maybe.html#174" class="InductiveConstructor">just</a> <a id="988" class="Symbol">_)</a> <a id="991" class="Symbol">=</a> <a id="993" href="Agda.Builtin.Unit.html#164" class="Record">⊤</a>
+<a id="995" href="Complex-Model.example.executedvotingexample-multi-candidates.html#940" class="Function">IsJust</a> <a id="1002" href="Agda.Builtin.Maybe.html#195" class="InductiveConstructor">nothing</a>  <a id="1011" class="Symbol">=</a> <a id="1013" href="Data.Empty.html#526" class="Datatype">⊥</a>
+
+
+<a id="fromJust"></a><a id="1017" href="Complex-Model.example.executedvotingexample-multi-candidates.html#1017" class="Function">fromJust</a> <a id="1026" class="Symbol">:</a> <a id="1028" class="Symbol">{</a><a id="1029" href="Complex-Model.example.executedvotingexample-multi-candidates.html#1029" class="Bound">A</a> <a id="1031" class="Symbol">:</a> <a id="1033" href="Agda.Primitive.html#326" class="Primitive">Set</a><a id="1036" class="Symbol">}</a> <a id="1038" class="Symbol">→</a> <a id="1040" class="Symbol">(</a><a id="1041" href="Complex-Model.example.executedvotingexample-multi-candidates.html#1041" class="Bound">p</a> <a id="1043" class="Symbol">:</a> <a id="1045" href="Agda.Builtin.Maybe.html#136" class="Datatype">Maybe</a> <a id="1051" href="Complex-Model.example.executedvotingexample-multi-candidates.html#1029" class="Bound">A</a><a id="1052" class="Symbol">)</a> <a id="1054" class="Symbol">→</a> <a id="1056" href="Complex-Model.example.executedvotingexample-multi-candidates.html#940" class="Function">IsJust</a> <a id="1063" href="Complex-Model.example.executedvotingexample-multi-candidates.html#1041" class="Bound">p</a> <a id="1065" class="Symbol">→</a> <a id="1067" href="Complex-Model.example.executedvotingexample-multi-candidates.html#1029" class="Bound">A</a>
+<a id="1069" href="Complex-Model.example.executedvotingexample-multi-candidates.html#1017" class="Function">fromJust</a> <a id="1078" class="Symbol">(</a><a id="1079" href="Agda.Builtin.Maybe.html#174" class="InductiveConstructor">just</a> <a id="1084" href="Complex-Model.example.executedvotingexample-multi-candidates.html#1084" class="Bound">a</a><a id="1085" class="Symbol">)</a> <a id="1087" href="Agda.Builtin.Unit.html#201" class="InductiveConstructor">tt</a> <a id="1090" class="Symbol">=</a> <a id="1092" href="Complex-Model.example.executedvotingexample-multi-candidates.html#1084" class="Bound">a</a>
+
+<a id="1095" class="Comment">--------------------------- First test   (adding voter)</a>
+<a id="1151" class="Comment">-- using function &quot;AddVoter&quot; with (nat 1) on testLedger</a>
+
+<a id="resultAfterAddVoter1"></a><a id="1208" href="Complex-Model.example.executedvotingexample-multi-candidates.html#1208" class="Function">resultAfterAddVoter1</a> <a id="1229" class="Symbol">:</a> <a id="1231" href="libraries.Mainlibrary.html#1065" class="Function">Ledger</a> <a id="1238" href="Data.Product.html#1167" class="Function Operator">×</a>  <a id="1241" href="basicDataStructure.html#1708" class="Record">MsgOrErrorWithGas</a>
+<a id="1259" href="Complex-Model.example.executedvotingexample-multi-candidates.html#1208" class="Function">resultAfterAddVoter1</a> <a id="1280" class="Symbol">=</a> <a id="1282" href="Complex-Model.ledgerversion.Ledger-Complex-Model.html#32402" class="Function">evaluateTerminatingfinal</a> <a id="1307" href="Complex-Model.example.votingexample-multi-candidates.html#3541" class="Function">testLedger</a> <a id="1318" class="Number">1</a> <a id="1320" class="Number">1</a> <a id="1322" class="Number">1</a> <a id="1324" class="String">&quot;addVoter&quot;</a> <a id="1335" class="Symbol">(</a><a id="1336" href="basicDataStructure.html#507" class="InductiveConstructor">nat</a> <a id="1340" class="Number">1</a><a id="1341" class="Symbol">)</a> <a id="1343" class="Number">20</a>
+
+
+<a id="resultReturnedAddVoter1"></a><a id="1348" href="Complex-Model.example.executedvotingexample-multi-candidates.html#1348" class="Function">resultReturnedAddVoter1</a> <a id="1372" class="Symbol">:</a> <a id="1374" href="basicDataStructure.html#1708" class="Record">MsgOrErrorWithGas</a>
+<a id="1392" href="Complex-Model.example.executedvotingexample-multi-candidates.html#1348" class="Function">resultReturnedAddVoter1</a> <a id="1416" class="Symbol">=</a> <a id="1418" href="Agda.Builtin.Sigma.html#264" class="Field">proj₂</a> <a id="1424" href="Complex-Model.example.executedvotingexample-multi-candidates.html#1208" class="Function">resultAfterAddVoter1</a>
+<a id="1445" class="Comment">{-
+evaluate to
+theMsg (nat 1) , 16 gas
+so executing addVoter (nat 1) returned (nat 1)
+-}</a>
+
+<a id="ledgerAfterAdd1"></a><a id="1535" href="Complex-Model.example.executedvotingexample-multi-candidates.html#1535" class="Function">ledgerAfterAdd1</a> <a id="1551" class="Symbol">:</a> <a id="1553" href="libraries.Mainlibrary.html#1065" class="Function">Ledger</a>
+<a id="1560" href="Complex-Model.example.executedvotingexample-multi-candidates.html#1535" class="Function">ledgerAfterAdd1</a> <a id="1576" class="Symbol">=</a> <a id="1578" href="Agda.Builtin.Sigma.html#252" class="Field">proj₁</a> <a id="1584" href="Complex-Model.example.executedvotingexample-multi-candidates.html#1208" class="Function">resultAfterAddVoter1</a>
+
+
+<a id="1607" class="Comment">-- check the pure function with (nat 1) after adding voter to our ledger</a>
+<a id="checkVoter1afterAdd1"></a><a id="1680" href="Complex-Model.example.executedvotingexample-multi-candidates.html#1680" class="Function">checkVoter1afterAdd1</a> <a id="1701" class="Symbol">:</a> <a id="1703" href="basicDataStructure.html#1428" class="Datatype">MsgOrError</a>
+<a id="1714" href="Complex-Model.example.executedvotingexample-multi-candidates.html#1680" class="Function">checkVoter1afterAdd1</a> <a id="1735" class="Symbol">=</a> <a id="1737" href="Complex-Model.example.executedvotingexample-multi-candidates.html#1535" class="Function">ledgerAfterAdd1</a> <a id="1753" class="Number">1</a> <a id="1755" class="Symbol">.</a><a id="1756" href="libraries.Mainlibrary.html#886" class="Field">purefunction</a> <a id="1769" class="String">&quot;checkVoter&quot;</a> <a id="1782" class="Symbol">(</a><a id="1783" href="basicDataStructure.html#507" class="InductiveConstructor">nat</a> <a id="1787" class="Number">1</a><a id="1788" class="Symbol">)</a>
+<a id="1790" class="Comment">{-
+evaluate to
+theMsg (nat 1)
+which means true
+-}</a>
+
+
+<a id="checkVoter3AfterAdd1"></a><a id="1842" href="Complex-Model.example.executedvotingexample-multi-candidates.html#1842" class="Function">checkVoter3AfterAdd1</a> <a id="1863" class="Symbol">:</a> <a id="1865" href="basicDataStructure.html#1428" class="Datatype">MsgOrError</a>
+<a id="1876" href="Complex-Model.example.executedvotingexample-multi-candidates.html#1842" class="Function">checkVoter3AfterAdd1</a> <a id="1897" class="Symbol">=</a> <a id="1899" href="Complex-Model.example.executedvotingexample-multi-candidates.html#1535" class="Function">ledgerAfterAdd1</a> <a id="1915" class="Number">1</a> <a id="1917" class="Symbol">.</a><a id="1918" href="libraries.Mainlibrary.html#886" class="Field">purefunction</a> <a id="1931" class="String">&quot;checkVoter&quot;</a> <a id="1944" class="Symbol">(</a><a id="1945" href="basicDataStructure.html#507" class="InductiveConstructor">nat</a> <a id="1949" class="Number">3</a><a id="1950" class="Symbol">)</a>
+<a id="1952" class="Comment">{-
+evaluate to
+theMsg (nat 0)
+which means false
+our ledger only includes (nat 1)
+-}</a>
+
+
+
+<a id="2039" class="Comment">----------------------------- Second test   (vote)</a>
+<a id="2090" class="Comment">-- using function &quot;vote&quot; with (nat 4) on ledgerAfterAdd5</a>
+
+<a id="resultAfterVote"></a><a id="2148" href="Complex-Model.example.executedvotingexample-multi-candidates.html#2148" class="Function">resultAfterVote</a> <a id="2164" class="Symbol">:</a> <a id="2166" href="libraries.Mainlibrary.html#1065" class="Function">Ledger</a> <a id="2173" href="Data.Product.html#1167" class="Function Operator">×</a>  <a id="2176" href="basicDataStructure.html#1708" class="Record">MsgOrErrorWithGas</a>
+<a id="2194" href="Complex-Model.example.executedvotingexample-multi-candidates.html#2148" class="Function">resultAfterVote</a> <a id="2210" class="Symbol">=</a> <a id="2212" href="Complex-Model.ledgerversion.Ledger-Complex-Model.html#32402" class="Function">evaluateTerminatingfinal</a> <a id="2237" href="Complex-Model.example.executedvotingexample-multi-candidates.html#1535" class="Function">ledgerAfterAdd1</a> <a id="2253" class="Number">1</a> <a id="2255" class="Number">1</a> <a id="2257" class="Number">1</a> <a id="2259" class="String">&quot;vote&quot;</a> <a id="2266" class="Symbol">(</a><a id="2267" href="basicDataStructure.html#507" class="InductiveConstructor">nat</a> <a id="2271" class="Number">4</a><a id="2272" class="Symbol">)</a> <a id="2274" class="Number">50</a>
+
+<a id="resultReturnedVote"></a><a id="2278" href="Complex-Model.example.executedvotingexample-multi-candidates.html#2278" class="Function">resultReturnedVote</a> <a id="2297" class="Symbol">:</a> <a id="2299" href="basicDataStructure.html#1708" class="Record">MsgOrErrorWithGas</a>
+<a id="2317" href="Complex-Model.example.executedvotingexample-multi-candidates.html#2278" class="Function">resultReturnedVote</a> <a id="2336" class="Symbol">=</a> <a id="2338" href="Agda.Builtin.Sigma.html#264" class="Field">proj₂</a> <a id="2344" href="Complex-Model.example.executedvotingexample-multi-candidates.html#2148" class="Function">resultAfterVote</a>
+
+<a id="2361" class="Comment">{- evaluates to
+
+theMsg (nat 4) , 39 gas
+
+-}</a>
+
+
+<a id="ledgerAfterVote"></a><a id="2408" href="Complex-Model.example.executedvotingexample-multi-candidates.html#2408" class="Function">ledgerAfterVote</a> <a id="2424" class="Symbol">:</a> <a id="2426" href="libraries.Mainlibrary.html#1065" class="Function">Ledger</a>
+<a id="2433" href="Complex-Model.example.executedvotingexample-multi-candidates.html#2408" class="Function">ledgerAfterVote</a> <a id="2449" class="Symbol">=</a> <a id="2451" href="Agda.Builtin.Sigma.html#252" class="Field">proj₁</a> <a id="2457" href="Complex-Model.example.executedvotingexample-multi-candidates.html#2148" class="Function">resultAfterVote</a>
+
+<a id="2474" class="Comment">-- check the pure function &quot;counter&quot; with (nat 4) after adding voter to our ledger</a>
+<a id="checkCounterAfterVote"></a><a id="2557" href="Complex-Model.example.executedvotingexample-multi-candidates.html#2557" class="Function">checkCounterAfterVote</a> <a id="2579" class="Symbol">:</a> <a id="2581" href="basicDataStructure.html#1428" class="Datatype">MsgOrError</a>
+<a id="2592" href="Complex-Model.example.executedvotingexample-multi-candidates.html#2557" class="Function">checkCounterAfterVote</a> <a id="2614" class="Symbol">=</a> <a id="2616" href="Complex-Model.example.executedvotingexample-multi-candidates.html#2408" class="Function">ledgerAfterVote</a> <a id="2632" class="Number">1</a> <a id="2634" class="Symbol">.</a><a id="2635" href="libraries.Mainlibrary.html#886" class="Field">purefunction</a> <a id="2648" class="String">&quot;counter&quot;</a> <a id="2658" class="Symbol">(</a><a id="2659" href="basicDataStructure.html#507" class="InductiveConstructor">nat</a> <a id="2663" class="Number">4</a><a id="2664" class="Symbol">)</a>
+<a id="2666" class="Comment">-- evaluates to</a>
+<a id="2682" class="Comment">-- theMsg (nat 1) which means our counter has one </a>
+
+
+<a id="2735" class="Comment">-- check the pure function &quot;counter&quot; with (nat 3) after adding voter to our ledger</a>
+<a id="checkCounterWith3"></a><a id="2818" href="Complex-Model.example.executedvotingexample-multi-candidates.html#2818" class="Function">checkCounterWith3</a> <a id="2836" class="Symbol">:</a> <a id="2838" href="basicDataStructure.html#1428" class="Datatype">MsgOrError</a>
+<a id="2849" href="Complex-Model.example.executedvotingexample-multi-candidates.html#2818" class="Function">checkCounterWith3</a> <a id="2867" class="Symbol">=</a> <a id="2869" href="Complex-Model.example.executedvotingexample-multi-candidates.html#2408" class="Function">ledgerAfterVote</a> <a id="2885" class="Number">1</a> <a id="2887" class="Symbol">.</a><a id="2888" href="libraries.Mainlibrary.html#886" class="Field">purefunction</a> <a id="2901" class="String">&quot;counter&quot;</a> <a id="2911" class="Symbol">(</a><a id="2912" href="basicDataStructure.html#507" class="InductiveConstructor">nat</a> <a id="2916" class="Number">3</a><a id="2917" class="Symbol">)</a>
+<a id="2919" class="Comment">-- evaluates to</a>
+<a id="2935" class="Comment">-- theMsg (nat 0) which means we do not have (nat 3) in our counter</a>
+
+
+
+
+
+<a id="3008" class="Comment">--------------------------- Third test   (adding voter)</a>
+<a id="3064" class="Comment">-- using function &quot;AddVoter&quot; with (nat 1) on ledgerAfterVote</a>
+
+<a id="resultAfterAddVoter1&#39;"></a><a id="3126" href="Complex-Model.example.executedvotingexample-multi-candidates.html#3126" class="Function">resultAfterAddVoter1&#39;</a> <a id="3148" class="Symbol">:</a> <a id="3150" href="libraries.Mainlibrary.html#1065" class="Function">Ledger</a> <a id="3157" href="Data.Product.html#1167" class="Function Operator">×</a>  <a id="3160" href="basicDataStructure.html#1708" class="Record">MsgOrErrorWithGas</a>
+<a id="3178" href="Complex-Model.example.executedvotingexample-multi-candidates.html#3126" class="Function">resultAfterAddVoter1&#39;</a> <a id="3200" class="Symbol">=</a> <a id="3202" href="Complex-Model.ledgerversion.Ledger-Complex-Model.html#32402" class="Function">evaluateTerminatingfinal</a> <a id="3227" href="Complex-Model.example.executedvotingexample-multi-candidates.html#2408" class="Function">ledgerAfterVote</a> <a id="3243" class="Number">1</a> <a id="3245" class="Number">1</a> <a id="3247" class="Number">1</a> <a id="3249" class="String">&quot;addVoter&quot;</a> <a id="3260" class="Symbol">(</a><a id="3261" href="basicDataStructure.html#507" class="InductiveConstructor">nat</a> <a id="3265" class="Number">1</a><a id="3266" class="Symbol">)</a> <a id="3268" class="Number">20</a>
+
+
+<a id="resultReturnedAddVoter1&#39;"></a><a id="3273" href="Complex-Model.example.executedvotingexample-multi-candidates.html#3273" class="Function">resultReturnedAddVoter1&#39;</a> <a id="3298" class="Symbol">:</a> <a id="3300" href="basicDataStructure.html#1708" class="Record">MsgOrErrorWithGas</a>
+<a id="3318" href="Complex-Model.example.executedvotingexample-multi-candidates.html#3273" class="Function">resultReturnedAddVoter1&#39;</a> <a id="3343" class="Symbol">=</a> <a id="3345" href="Agda.Builtin.Sigma.html#264" class="Field">proj₂</a> <a id="3351" href="Complex-Model.example.executedvotingexample-multi-candidates.html#3126" class="Function">resultAfterAddVoter1&#39;</a>
+<a id="3373" class="Comment">{-
+evaluate to
+theMsg (nat 1) , 16 gas
+so executing addVoter (nat 1) returned (nat 1)
+-}</a>
+
+<a id="ledgerAfterAdd1&#39;"></a><a id="3463" href="Complex-Model.example.executedvotingexample-multi-candidates.html#3463" class="Function">ledgerAfterAdd1&#39;</a> <a id="3480" class="Symbol">:</a> <a id="3482" href="libraries.Mainlibrary.html#1065" class="Function">Ledger</a>
+<a id="3489" href="Complex-Model.example.executedvotingexample-multi-candidates.html#3463" class="Function">ledgerAfterAdd1&#39;</a> <a id="3506" class="Symbol">=</a> <a id="3508" href="Agda.Builtin.Sigma.html#252" class="Field">proj₁</a> <a id="3514" href="Complex-Model.example.executedvotingexample-multi-candidates.html#3126" class="Function">resultAfterAddVoter1&#39;</a>
+
+
+<a id="3538" class="Comment">-- check the pure function with (nat 1) after adding voter to our ledger</a>
+<a id="checkVoter1afterAdd1&#39;"></a><a id="3611" href="Complex-Model.example.executedvotingexample-multi-candidates.html#3611" class="Function">checkVoter1afterAdd1&#39;</a> <a id="3633" class="Symbol">:</a> <a id="3635" href="basicDataStructure.html#1428" class="Datatype">MsgOrError</a>
+<a id="3646" href="Complex-Model.example.executedvotingexample-multi-candidates.html#3611" class="Function">checkVoter1afterAdd1&#39;</a> <a id="3668" class="Symbol">=</a> <a id="3670" href="Complex-Model.example.executedvotingexample-multi-candidates.html#3463" class="Function">ledgerAfterAdd1&#39;</a> <a id="3687" class="Number">1</a> <a id="3689" class="Symbol">.</a><a id="3690" href="libraries.Mainlibrary.html#886" class="Field">purefunction</a> <a id="3703" class="String">&quot;checkVoter&quot;</a> <a id="3716" class="Symbol">(</a><a id="3717" href="basicDataStructure.html#507" class="InductiveConstructor">nat</a> <a id="3721" class="Number">1</a><a id="3722" class="Symbol">)</a>
+<a id="3724" class="Comment">{-
+evaluate to
+theMsg (nat 1)
+which means true
+-}</a>
+
+
+<a id="checkVoter3AfterAdd1&#39;"></a><a id="3776" href="Complex-Model.example.executedvotingexample-multi-candidates.html#3776" class="Function">checkVoter3AfterAdd1&#39;</a> <a id="3798" class="Symbol">:</a> <a id="3800" href="basicDataStructure.html#1428" class="Datatype">MsgOrError</a>
+<a id="3811" href="Complex-Model.example.executedvotingexample-multi-candidates.html#3776" class="Function">checkVoter3AfterAdd1&#39;</a> <a id="3833" class="Symbol">=</a> <a id="3835" href="Complex-Model.example.executedvotingexample-multi-candidates.html#3463" class="Function">ledgerAfterAdd1&#39;</a> <a id="3852" class="Number">1</a> <a id="3854" class="Symbol">.</a><a id="3855" href="libraries.Mainlibrary.html#886" class="Field">purefunction</a> <a id="3868" class="String">&quot;checkVoter&quot;</a> <a id="3881" class="Symbol">(</a><a id="3882" href="basicDataStructure.html#507" class="InductiveConstructor">nat</a> <a id="3886" class="Number">3</a><a id="3887" class="Symbol">)</a>
+<a id="3889" class="Comment">{-
+evaluate to
+theMsg (nat 0)
+which means false
+our ledger only includes (nat 1)
+-}</a>
+
+
+
+<a id="3976" class="Comment">----------------------------- Fourth test   (vote)</a>
+<a id="4027" class="Comment">-- using function &quot;vote&quot; with (nat 4) on ledgerAfterAdd5</a>
+
+<a id="resultAfterVote&#39;"></a><a id="4085" href="Complex-Model.example.executedvotingexample-multi-candidates.html#4085" class="Function">resultAfterVote&#39;</a> <a id="4102" class="Symbol">:</a> <a id="4104" href="libraries.Mainlibrary.html#1065" class="Function">Ledger</a> <a id="4111" href="Data.Product.html#1167" class="Function Operator">×</a>  <a id="4114" href="basicDataStructure.html#1708" class="Record">MsgOrErrorWithGas</a>
+<a id="4132" href="Complex-Model.example.executedvotingexample-multi-candidates.html#4085" class="Function">resultAfterVote&#39;</a> <a id="4149" class="Symbol">=</a> <a id="4151" href="Complex-Model.ledgerversion.Ledger-Complex-Model.html#32402" class="Function">evaluateTerminatingfinal</a> <a id="4176" href="Complex-Model.example.executedvotingexample-multi-candidates.html#3463" class="Function">ledgerAfterAdd1&#39;</a> <a id="4193" class="Number">1</a> <a id="4195" class="Number">1</a> <a id="4197" class="Number">1</a> <a id="4199" class="String">&quot;vote&quot;</a> <a id="4206" class="Symbol">(</a><a id="4207" href="basicDataStructure.html#507" class="InductiveConstructor">nat</a> <a id="4211" class="Number">4</a><a id="4212" class="Symbol">)</a> <a id="4214" class="Number">50</a>
+
+<a id="resultReturnedVote&#39;"></a><a id="4218" href="Complex-Model.example.executedvotingexample-multi-candidates.html#4218" class="Function">resultReturnedVote&#39;</a> <a id="4238" class="Symbol">:</a> <a id="4240" href="basicDataStructure.html#1708" class="Record">MsgOrErrorWithGas</a>
+<a id="4258" href="Complex-Model.example.executedvotingexample-multi-candidates.html#4218" class="Function">resultReturnedVote&#39;</a> <a id="4278" class="Symbol">=</a> <a id="4280" href="Agda.Builtin.Sigma.html#264" class="Field">proj₂</a> <a id="4286" href="Complex-Model.example.executedvotingexample-multi-candidates.html#4085" class="Function">resultAfterVote&#39;</a>
+
+<a id="4304" class="Comment">{- evaluates to
+
+theMsg (nat 4) , 39 gas
+
+-}</a>
+
+
+<a id="ledgerAfterVote&#39;"></a><a id="4351" href="Complex-Model.example.executedvotingexample-multi-candidates.html#4351" class="Function">ledgerAfterVote&#39;</a> <a id="4368" class="Symbol">:</a> <a id="4370" href="libraries.Mainlibrary.html#1065" class="Function">Ledger</a>
+<a id="4377" href="Complex-Model.example.executedvotingexample-multi-candidates.html#4351" class="Function">ledgerAfterVote&#39;</a> <a id="4394" class="Symbol">=</a> <a id="4396" href="Agda.Builtin.Sigma.html#252" class="Field">proj₁</a> <a id="4402" href="Complex-Model.example.executedvotingexample-multi-candidates.html#4085" class="Function">resultAfterVote&#39;</a>
+
+<a id="4420" class="Comment">-- check the pure function &quot;counter&quot; with (nat 4) after adding voter to our ledger</a>
+<a id="checkCounterAfterVote&#39;"></a><a id="4503" href="Complex-Model.example.executedvotingexample-multi-candidates.html#4503" class="Function">checkCounterAfterVote&#39;</a> <a id="4526" class="Symbol">:</a> <a id="4528" href="basicDataStructure.html#1428" class="Datatype">MsgOrError</a>
+<a id="4539" href="Complex-Model.example.executedvotingexample-multi-candidates.html#4503" class="Function">checkCounterAfterVote&#39;</a> <a id="4562" class="Symbol">=</a> <a id="4564" href="Complex-Model.example.executedvotingexample-multi-candidates.html#4351" class="Function">ledgerAfterVote&#39;</a> <a id="4581" class="Number">1</a> <a id="4583" class="Symbol">.</a><a id="4584" href="libraries.Mainlibrary.html#886" class="Field">purefunction</a> <a id="4597" class="String">&quot;counter&quot;</a> <a id="4607" class="Symbol">(</a><a id="4608" href="basicDataStructure.html#507" class="InductiveConstructor">nat</a> <a id="4612" class="Number">4</a><a id="4613" class="Symbol">)</a>
+<a id="4615" class="Comment">-- evaluates to</a>
+<a id="4631" class="Comment">-- theMsg (nat 2) which means our counter have 2 </a>
+
+<a id="4682" class="Comment">-- check the pure function &quot;counter&quot; with (nat 3) after adding voter to our ledger</a>
+<a id="checkCounterWith3&#39;"></a><a id="4765" href="Complex-Model.example.executedvotingexample-multi-candidates.html#4765" class="Function">checkCounterWith3&#39;</a> <a id="4784" class="Symbol">:</a> <a id="4786" href="basicDataStructure.html#1428" class="Datatype">MsgOrError</a>
+<a id="4797" href="Complex-Model.example.executedvotingexample-multi-candidates.html#4765" class="Function">checkCounterWith3&#39;</a> <a id="4816" class="Symbol">=</a> <a id="4818" href="Complex-Model.example.executedvotingexample-multi-candidates.html#4351" class="Function">ledgerAfterVote&#39;</a> <a id="4835" class="Number">1</a> <a id="4837" class="Symbol">.</a><a id="4838" href="libraries.Mainlibrary.html#886" class="Field">purefunction</a> <a id="4851" class="String">&quot;counter&quot;</a> <a id="4861" class="Symbol">(</a><a id="4862" href="basicDataStructure.html#507" class="InductiveConstructor">nat</a> <a id="4866" class="Number">3</a><a id="4867" class="Symbol">)</a>
+<a id="4869" class="Comment">-- evaluates to</a>
+<a id="4885" class="Comment">-- theMsg (nat 0) which means we do not have (nat 3) in our counter</a>
+
+
+
+
+
+<a id="4958" class="Comment">--------------------------- Fifith test   (adding voter)</a>
+<a id="5015" class="Comment">-- using function &quot;AddVoter&quot; with (nat 1) on ledgerAfterAdd1&#39;</a>
+
+<a id="resultAfterAddVoter1&#39;&#39;"></a><a id="5078" href="Complex-Model.example.executedvotingexample-multi-candidates.html#5078" class="Function">resultAfterAddVoter1&#39;&#39;</a> <a id="5101" class="Symbol">:</a> <a id="5103" href="libraries.Mainlibrary.html#1065" class="Function">Ledger</a> <a id="5110" href="Data.Product.html#1167" class="Function Operator">×</a>  <a id="5113" href="basicDataStructure.html#1708" class="Record">MsgOrErrorWithGas</a>
+<a id="5131" href="Complex-Model.example.executedvotingexample-multi-candidates.html#5078" class="Function">resultAfterAddVoter1&#39;&#39;</a> <a id="5154" class="Symbol">=</a> <a id="5156" href="Complex-Model.ledgerversion.Ledger-Complex-Model.html#32402" class="Function">evaluateTerminatingfinal</a> <a id="5181" href="Complex-Model.example.executedvotingexample-multi-candidates.html#4351" class="Function">ledgerAfterVote&#39;</a> <a id="5198" class="Number">1</a> <a id="5200" class="Number">1</a> <a id="5202" class="Number">1</a> <a id="5204" class="String">&quot;addVoter&quot;</a> <a id="5215" class="Symbol">(</a><a id="5216" href="basicDataStructure.html#507" class="InductiveConstructor">nat</a> <a id="5220" class="Number">1</a><a id="5221" class="Symbol">)</a> <a id="5223" class="Number">20</a>
+
+
+<a id="resultReturnedAddVoter1&#39;&#39;"></a><a id="5228" href="Complex-Model.example.executedvotingexample-multi-candidates.html#5228" class="Function">resultReturnedAddVoter1&#39;&#39;</a> <a id="5254" class="Symbol">:</a> <a id="5256" href="basicDataStructure.html#1708" class="Record">MsgOrErrorWithGas</a>
+<a id="5274" href="Complex-Model.example.executedvotingexample-multi-candidates.html#5228" class="Function">resultReturnedAddVoter1&#39;&#39;</a> <a id="5300" class="Symbol">=</a> <a id="5302" href="Agda.Builtin.Sigma.html#264" class="Field">proj₂</a> <a id="5308" href="Complex-Model.example.executedvotingexample-multi-candidates.html#3126" class="Function">resultAfterAddVoter1&#39;</a>
+<a id="5330" class="Comment">{-
+evaluate to
+theMsg (nat 1) , 16 gas
+so executing addVoter (nat 1) returned (nat 1)
+-}</a>
+
+<a id="ledgerAfterAdd1&#39;&#39;"></a><a id="5420" href="Complex-Model.example.executedvotingexample-multi-candidates.html#5420" class="Function">ledgerAfterAdd1&#39;&#39;</a> <a id="5438" class="Symbol">:</a> <a id="5440" href="libraries.Mainlibrary.html#1065" class="Function">Ledger</a>
+<a id="5447" href="Complex-Model.example.executedvotingexample-multi-candidates.html#5420" class="Function">ledgerAfterAdd1&#39;&#39;</a> <a id="5465" class="Symbol">=</a> <a id="5467" href="Agda.Builtin.Sigma.html#252" class="Field">proj₁</a> <a id="5473" href="Complex-Model.example.executedvotingexample-multi-candidates.html#5078" class="Function">resultAfterAddVoter1&#39;&#39;</a>
+
+
+<a id="5498" class="Comment">-- check the pure function with (nat 1) after adding voter to our ledger</a>
+<a id="checkVoter1AfterAdd1&#39;&#39;"></a><a id="5571" href="Complex-Model.example.executedvotingexample-multi-candidates.html#5571" class="Function">checkVoter1AfterAdd1&#39;&#39;</a> <a id="5594" class="Symbol">:</a> <a id="5596" href="basicDataStructure.html#1428" class="Datatype">MsgOrError</a>
+<a id="5607" href="Complex-Model.example.executedvotingexample-multi-candidates.html#5571" class="Function">checkVoter1AfterAdd1&#39;&#39;</a> <a id="5630" class="Symbol">=</a> <a id="5632" href="Complex-Model.example.executedvotingexample-multi-candidates.html#5420" class="Function">ledgerAfterAdd1&#39;&#39;</a> <a id="5650" class="Number">1</a> <a id="5652" class="Symbol">.</a><a id="5653" href="libraries.Mainlibrary.html#886" class="Field">purefunction</a> <a id="5666" class="String">&quot;checkVoter&quot;</a> <a id="5679" class="Symbol">(</a><a id="5680" href="basicDataStructure.html#507" class="InductiveConstructor">nat</a> <a id="5684" class="Number">1</a><a id="5685" class="Symbol">)</a>
+<a id="5687" class="Comment">{-
+evaluate to
+theMsg (nat 1)
+which means true
+-}</a>
+
+
+<a id="checkVoter3AfterAdd1&#39;&#39;"></a><a id="5739" href="Complex-Model.example.executedvotingexample-multi-candidates.html#5739" class="Function">checkVoter3AfterAdd1&#39;&#39;</a> <a id="5762" class="Symbol">:</a> <a id="5764" href="basicDataStructure.html#1428" class="Datatype">MsgOrError</a>
+<a id="5775" href="Complex-Model.example.executedvotingexample-multi-candidates.html#5739" class="Function">checkVoter3AfterAdd1&#39;&#39;</a> <a id="5798" class="Symbol">=</a> <a id="5800" href="Complex-Model.example.executedvotingexample-multi-candidates.html#5420" class="Function">ledgerAfterAdd1&#39;&#39;</a> <a id="5818" class="Number">1</a> <a id="5820" class="Symbol">.</a><a id="5821" href="libraries.Mainlibrary.html#886" class="Field">purefunction</a> <a id="5834" class="String">&quot;checkVoter&quot;</a> <a id="5847" class="Symbol">(</a><a id="5848" href="basicDataStructure.html#507" class="InductiveConstructor">nat</a> <a id="5852" class="Number">3</a><a id="5853" class="Symbol">)</a>
+<a id="5855" class="Comment">{-
+evaluate to
+theMsg (nat 0)
+which means false
+our ledger only includes (nat 1)
+-}</a>
+
+
+
+
+
+<a id="5944" class="Comment">----------------------------- Sixth test   (vote)</a>
+<a id="5994" class="Comment">-- using function &quot;vote&quot; with (nat 4) on ledgerAfterAdd5</a>
+
+<a id="resultAfterVote&#39;&#39;"></a><a id="6052" href="Complex-Model.example.executedvotingexample-multi-candidates.html#6052" class="Function">resultAfterVote&#39;&#39;</a> <a id="6070" class="Symbol">:</a> <a id="6072" href="libraries.Mainlibrary.html#1065" class="Function">Ledger</a> <a id="6079" href="Data.Product.html#1167" class="Function Operator">×</a>  <a id="6082" href="basicDataStructure.html#1708" class="Record">MsgOrErrorWithGas</a>
+<a id="6100" href="Complex-Model.example.executedvotingexample-multi-candidates.html#6052" class="Function">resultAfterVote&#39;&#39;</a> <a id="6118" class="Symbol">=</a> <a id="6120" href="Complex-Model.ledgerversion.Ledger-Complex-Model.html#32402" class="Function">evaluateTerminatingfinal</a> <a id="6145" href="Complex-Model.example.executedvotingexample-multi-candidates.html#5420" class="Function">ledgerAfterAdd1&#39;&#39;</a> <a id="6163" class="Number">1</a> <a id="6165" class="Number">1</a> <a id="6167" class="Number">1</a> <a id="6169" class="String">&quot;vote&quot;</a> <a id="6176" class="Symbol">(</a><a id="6177" href="basicDataStructure.html#507" class="InductiveConstructor">nat</a> <a id="6181" class="Number">4</a><a id="6182" class="Symbol">)</a> <a id="6184" class="Number">50</a>
+
+<a id="resultReturnedVote&#39;&#39;"></a><a id="6188" href="Complex-Model.example.executedvotingexample-multi-candidates.html#6188" class="Function">resultReturnedVote&#39;&#39;</a> <a id="6209" class="Symbol">:</a> <a id="6211" href="basicDataStructure.html#1708" class="Record">MsgOrErrorWithGas</a>
+<a id="6229" href="Complex-Model.example.executedvotingexample-multi-candidates.html#6188" class="Function">resultReturnedVote&#39;&#39;</a> <a id="6250" class="Symbol">=</a> <a id="6252" href="Agda.Builtin.Sigma.html#264" class="Field">proj₂</a> <a id="6258" href="Complex-Model.example.executedvotingexample-multi-candidates.html#6052" class="Function">resultAfterVote&#39;&#39;</a>
+
+<a id="6277" class="Comment">{- evaluates to
+
+theMsg (nat 4) , 39 gas
+
+-}</a>
+
+
+<a id="ledgerAfterVote&#39;&#39;"></a><a id="6324" href="Complex-Model.example.executedvotingexample-multi-candidates.html#6324" class="Function">ledgerAfterVote&#39;&#39;</a> <a id="6342" class="Symbol">:</a> <a id="6344" href="libraries.Mainlibrary.html#1065" class="Function">Ledger</a>
+<a id="6351" href="Complex-Model.example.executedvotingexample-multi-candidates.html#6324" class="Function">ledgerAfterVote&#39;&#39;</a> <a id="6369" class="Symbol">=</a> <a id="6371" href="Agda.Builtin.Sigma.html#252" class="Field">proj₁</a> <a id="6377" href="Complex-Model.example.executedvotingexample-multi-candidates.html#6052" class="Function">resultAfterVote&#39;&#39;</a>
+
+<a id="6396" class="Comment">-- check the pure function &quot;counter&quot; with (nat 4) after adding voter to our ledger</a>
+<a id="checkCounterAfterVote&#39;&#39;"></a><a id="6479" href="Complex-Model.example.executedvotingexample-multi-candidates.html#6479" class="Function">checkCounterAfterVote&#39;&#39;</a> <a id="6503" class="Symbol">:</a> <a id="6505" href="basicDataStructure.html#1428" class="Datatype">MsgOrError</a>
+<a id="6516" href="Complex-Model.example.executedvotingexample-multi-candidates.html#6479" class="Function">checkCounterAfterVote&#39;&#39;</a> <a id="6540" class="Symbol">=</a> <a id="6542" href="Complex-Model.example.executedvotingexample-multi-candidates.html#6324" class="Function">ledgerAfterVote&#39;&#39;</a> <a id="6560" class="Number">1</a> <a id="6562" class="Symbol">.</a><a id="6563" href="libraries.Mainlibrary.html#886" class="Field">purefunction</a> <a id="6576" class="String">&quot;counter&quot;</a> <a id="6586" class="Symbol">(</a><a id="6587" href="basicDataStructure.html#507" class="InductiveConstructor">nat</a> <a id="6591" class="Number">4</a><a id="6592" class="Symbol">)</a>
+<a id="6594" class="Comment">-- evaluates to</a>
+<a id="6610" class="Comment">-- theMsg (nat 3) which means our counter have 3 </a>
+
+<a id="6661" class="Comment">-- check the pure function &quot;counter&quot; with (nat 3) after adding voter to our ledger</a>
+<a id="checkCounterWith3&#39;&#39;"></a><a id="6744" href="Complex-Model.example.executedvotingexample-multi-candidates.html#6744" class="Function">checkCounterWith3&#39;&#39;</a> <a id="6764" class="Symbol">:</a> <a id="6766" href="basicDataStructure.html#1428" class="Datatype">MsgOrError</a>
+<a id="6777" href="Complex-Model.example.executedvotingexample-multi-candidates.html#6744" class="Function">checkCounterWith3&#39;&#39;</a> <a id="6797" class="Symbol">=</a> <a id="6799" href="Complex-Model.example.executedvotingexample-multi-candidates.html#6324" class="Function">ledgerAfterVote&#39;&#39;</a> <a id="6817" class="Number">1</a> <a id="6819" class="Symbol">.</a><a id="6820" href="libraries.Mainlibrary.html#886" class="Field">purefunction</a> <a id="6833" class="String">&quot;counter&quot;</a> <a id="6843" class="Symbol">(</a><a id="6844" href="basicDataStructure.html#507" class="InductiveConstructor">nat</a> <a id="6848" class="Number">3</a><a id="6849" class="Symbol">)</a>
+<a id="6851" class="Comment">-- evaluates to</a>
+<a id="6867" class="Comment">-- theMsg (nat 0) which means we do not have (nat 3) in our counter</a>
+</pre></body></html>

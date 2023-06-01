@@ -1,6 +1,6 @@
 open import constantparameters
 
-module Complex-Model.example.votingexample  where
+module Complex-Model.example.votingexample-single-candidate  where
 open import Data.List
 open import Data.Bool.Base 
 open import Agda.Builtin.Unit

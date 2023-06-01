@@ -56,13 +56,27 @@ open import Complex-Model.ledgerversion.Ledger-Complex-Model
 
 open import Complex-Model.ccomand.ccommands-cresponse
 
--- A voting example
 
-open import Complex-Model.example.votingexample
 
--- Executed voting example
+-- A voting example for single candidate
 
-open import Complex-Model.example.executedvotingexample
+open import Complex-Model.example.votingexample-single-candidate
+
+-- Executed voting example for single candidate
+
+open import Complex-Model.example.votingexample-single-candidate
+
+
+
+-- a more democratic one with multiple candidates
+
+-- A voting example for multiple candidates
+
+open import Complex-Model.example.votingexample-multi-candidates
+
+-- Executed voting example for multiple candidates
+
+open import Complex-Model.example.executedvotingexample-multi-candidates
 
 -- Sect V. CONCLUSION AND FUTURE WORK
 
