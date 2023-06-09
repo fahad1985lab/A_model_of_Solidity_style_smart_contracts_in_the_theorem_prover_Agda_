@@ -9,7 +9,7 @@
 * The file  [guidelines.agda](Agdacode/guidelines.agda/) shows the code in the order as it appears in the paper.
 
 ## Html Version of Agda code 
-* Allows to prview the Agda code without Agda installation. In order to render it in your browser you need to download it first and then load the downloaded file Html/loadAll.html into your browser. Location of files: [html](/Html/loadAll.html)
+* Allows to prview the Agda code without Agda installation: [html](/Html/guidelines.html) . In order to render it in your browser you need to download it first and then load the downloaded file Html/loadAll.html into your browser. Location of files: [html](/Html/guidelines.html)
 
  ## Authors and Licence
  * A model of Solidity style smart contracts in the theorem prover Agda - by 
