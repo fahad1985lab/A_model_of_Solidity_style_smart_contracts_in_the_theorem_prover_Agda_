@@ -6,10 +6,10 @@
   [Agdacode](/Agdacode/) 
 
   
-* The file  [guidelines.agda](Agdacode/guidelines.agda/) shows the code in the order as it appears in the paper.
+* The file  [guidelines.agda](Agdacode/guidelines.agda/) shows the code in the order it appears in the paper.
 
 ## Html Version of Agda code 
-* Allows to prview the Agda code without Agda installation: [html](https://htmlpreview.github.io/?https://github.com/fahad1985lab/A_model_of_Solidity_style_smart_contracts_in_the_theorem_prover_Agda_/blob/main/Html/guidelines.html) . In order to render it in your browser you need to download it first and then load the downloaded file Html/guidelines.html into your browser. Location of files: [html](/Html/guidelines.html)
+* Allows to preview the Agda code without Agda installation: [html](https://htmlpreview.github.io/?https://github.com/fahad1985lab/A_model_of_Solidity_style_smart_contracts_in_the_theorem_prover_Agda_/blob/main/Html/guidelines.html). In order to render it in your browser, you need to download it first and then load the downloaded file Html/guidelines.html into your browser. Location of files: [html](/Html/guidelines.html)
 
  ## Authors and Licence
  * A model of Solidity style smart contracts in the theorem prover Agda - by 
