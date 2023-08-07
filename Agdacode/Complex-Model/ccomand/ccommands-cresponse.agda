@@ -22,15 +22,16 @@ mutual
 
   -- contract-commands:
   data CCommands : Set where
-    updatec : FunctionName → ((Msg → MsgOrError) → (Msg → MsgOrError))
-            → ((Msg → MsgOrError) → ℕ) → CCommands
+    updatec    : FunctionName → ((Msg → MsgOrError)
+               → (Msg → MsgOrError)) → ((Msg → MsgOrError)
+               → (Msg → ℕ) → Msg → ℕ) → CCommands
     currentAddrLookupc : CCommands
     callAddrLookupc : CCommands
     callc   : Address → FunctionName → Msg → CCommands
-    callPure : Address → FunctionName → Msg → CCommands   --callStatic into callPure 
+    callPure : Address → FunctionName → Msg → CCommands   
     transferc : Amount → Address →  CCommands
     getAmountc : Address → CCommands
-    raiseException : ℕ → String → CCommands --==> we used error instead of it
+    raiseException : ℕ → String → CCommands 
     
 -- contract-responses
   CResponse : CCommands → Set

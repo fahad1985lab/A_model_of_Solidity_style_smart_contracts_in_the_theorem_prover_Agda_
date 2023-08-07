@@ -15,21 +15,21 @@ module guidelines (param : ConstantParameters) where
 -- Sect II RELATED WORK
 
 
--- Sect III. A BRIEF BACKGROUND ON AGDA PROOF ASSISTANT AND ETHEREUM
+-- Sect III. BACKGROUND – THE PROOF ASSISTANT AGDA AND ETHEREUM
 
---- Subsection A. A brief overview into Theorem prover Agda
+--- Subsection A. The theorem prover Agda
 
 open import Simple-Model.ledgerversion.Ledger-Simple-Model
 
 
---- Subsection B. A brief overview on Ethereum
-
-
+--- Subsection B. Ethereum
 
 
 -- Sect IV. MODELLING OF SOLIDITY SMART CONTRACTS IN AGDA
 
---- Subsection A. Simple model of Solidity smart contracts in Agda
+--- Subsection A. Overview on simple and complex models
+
+--- Subsection B. Simple model of Solidity smart contracts in Agda
 
 -- Ledger
 
@@ -46,7 +46,7 @@ open import Simple-Model.library-simple-model.basicDataStructureWithSimpleModel
 
 
 
---- Subsection B. Complex model of solidity smart contracts in Agda
+--- Subsection C. Complex model of solidity smart contracts in Agda
 
 -- Ledger
 
@@ -64,7 +64,7 @@ open import Complex-Model.example.votingexample-single-candidate
 
 -- Executed voting example for single candidate
 
-open import Complex-Model.example.votingexample-single-candidate
+open import Complex-Model.example.executedvotingexample-single-candidate
 
 
 

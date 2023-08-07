@@ -43,7 +43,7 @@ incrementcandidates candidateVotedFor oldCounter (nat candidate) = if candidateV
 incrementcandidates ow ow' ow'' = err (strErr " You cannot delete voter ")
 
 incrementAux : MsgOrError → SmartContractExec Msg
-incrementAux (theMsg (nat candidate)) = (exec (updatec "counter" (incrementcandidates candidate) λ f → 1)
+incrementAux (theMsg (nat candidate)) = (exec (updatec "counter" (incrementcandidates candidate) λ oldFun oldcost msg → 1)
                                                           (λ n → 1)) λ x → return 1 (nat candidate)
 incrementAux ow = error (strErr "counter returns not a number") ⟨ 0 >> 0 ∙ "increment" [ (nat 0) ]⟩
 
@@ -71,7 +71,7 @@ voteAux addr (theMsg (nat zero)) candidate
                           = error (strErr "The voter is not allowed to vote")
                             ⟨ 0 >> 0 ∙ "Voter is not allowed to vote" [ nat 0 ]⟩
 voteAux addr (theMsg (nat (suc n))) candidate
-                          = exec (updatec "checkVoter" (deleteVoterAux (nat addr)) λ _ → 1) (λ _ → 1)
+                          = exec (updatec "checkVoter" (deleteVoterAux (nat addr)) λ oldFun oldcost msg → 1) (λ _ → 1)
                             (λ x → (incrementAux (theMsg candidate)))
 voteAux addr (theMsg ow) candidate
                           = error (strErr "The message is not a number")
@@ -89,11 +89,10 @@ testLedger : Ledger
 testLedger 1 .amount = 100                                                                                        
 
 -- in case to add voter
-testLedger 1 .fun "addVoter" msg  = exec (updatec "checkVoter"
-                                    (addVoterAux msg) λ _ → 1)(λ _ → 1)
+testLedger 1 .fun "addVoter" msg  = exec (updatec "checkVoter" (addVoterAux msg) λ oldFun oldcost msg → 1)(λ _ → 1)
                                     λ _ → return 1 msg                                           
 -- in case to delete voter
-testLedger 1 .fun "deleteVoter" msg = exec (updatec "checkVoter" (deleteVoterAux msg) λ _ → 1)
+testLedger 1 .fun "deleteVoter" msg = exec (updatec "checkVoter" (deleteVoterAux msg) λ oldFun oldcost msg → 1)
                                       (λ _ → 1) λ _ → return 1 msg
 -- in case to vote
 testLedger 1 .fun "vote" msg = exec callAddrLookupc  (λ _ → 1)
@@ -104,7 +103,7 @@ testLedger 1 .purefunction "checkVoter" msg = theMsg (nat 0)
 
 -- in case to increment our counter
 testLedger 1 .purefunction "counter" msg = theMsg (nat 0)
-
+testLedger 1 .purefunctionCost "checkVoter" msg = 1
 -- define a ledger for address 3 with amount only
 testLedger 3 .amount = 100
 
@@ -112,5 +111,5 @@ testLedger 3 .amount = 100
 testLedger ow .amount = 0
 testLedger ow .fun ow' ow'' = error (strErr "Undefined") ⟨ ow >> ow ∙ ow' [ ow'' ]⟩
 testLedger ow .purefunction ow' ow'' = err (strErr "Undefined")
-
+testLedger ow .purefunctionCost ow' ow'' = 1
 

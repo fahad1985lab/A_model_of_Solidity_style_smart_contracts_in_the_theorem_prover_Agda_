@@ -32,59 +32,59 @@
   <a id="775" class="Keyword">constructor</a> <a id="contract"></a><a id="787" href="libraries.Mainlibrary.html#787" class="InductiveConstructor">contract</a>
   <a id="798" class="Keyword">field</a>
     <a id="Contract.amount"></a><a id="808" href="libraries.Mainlibrary.html#808" class="Field">amount</a>   <a id="817" class="Symbol">:</a> <a id="819" href="basicDataStructure.html#360" class="Function">Amount</a>
-    <a id="Contract.fun"></a><a id="830" href="libraries.Mainlibrary.html#830" class="Field">fun</a>  <a id="835" class="Symbol">:</a> <a id="837" href="basicDataStructure.html#172" class="Function">FunctionName</a> <a id="850" class="Symbol">→</a> <a id="852" href="basicDataStructure.html#488" class="Datatype">Msg</a> <a id="856" class="Symbol">→</a> <a id="858" href="Complex-Model.ccomand.ccommands-cresponse.html#1535" class="Datatype">SmartContractExec</a> <a id="876" href="basicDataStructure.html#488" class="Datatype">Msg</a>  
+    <a id="Contract.fun"></a><a id="830" href="libraries.Mainlibrary.html#830" class="Field">fun</a>  <a id="835" class="Symbol">:</a> <a id="837" href="basicDataStructure.html#172" class="Function">FunctionName</a> <a id="850" class="Symbol">→</a> <a id="852" href="basicDataStructure.html#488" class="Datatype">Msg</a> <a id="856" class="Symbol">→</a> <a id="858" href="Complex-Model.ccomand.ccommands-cresponse.html#1514" class="Datatype">SmartContractExec</a> <a id="876" href="basicDataStructure.html#488" class="Datatype">Msg</a>  
     <a id="Contract.purefunction"></a><a id="886" href="libraries.Mainlibrary.html#886" class="Field">purefunction</a> <a id="899" class="Symbol">:</a> <a id="901" href="basicDataStructure.html#172" class="Function">FunctionName</a> <a id="914" class="Symbol">→</a> <a id="916" href="basicDataStructure.html#488" class="Datatype">Msg</a> <a id="920" class="Symbol">→</a> <a id="922" href="basicDataStructure.html#1428" class="Datatype">MsgOrError</a>  <a id="934" class="Comment">--this one will change because in ether the function no change only the variable can change</a>
-   
+    <a id="Contract.purefunctionCost"></a><a id="1030" href="libraries.Mainlibrary.html#1030" class="Field">purefunctionCost</a> <a id="1047" class="Symbol">:</a> <a id="1049" href="basicDataStructure.html#172" class="Function">FunctionName</a> <a id="1062" class="Symbol">→</a> <a id="1064" href="basicDataStructure.html#488" class="Datatype">Msg</a> <a id="1068" class="Symbol">→</a> <a id="1070" href="Agda.Builtin.Nat.html#192" class="Datatype">ℕ</a>   
 
-<a id="1031" class="Keyword">open</a> <a id="1036" href="libraries.Mainlibrary.html#752" class="Module">Contract</a> <a id="1045" class="Keyword">public</a>
-
-
-
-
-<a id="1056" class="Comment">--ledger</a>
-<a id="Ledger"></a><a id="1065" href="libraries.Mainlibrary.html#1065" class="Function">Ledger</a> <a id="1072" class="Symbol">:</a> <a id="1074" href="Agda.Primitive.html#326" class="Primitive">Set</a>
-<a id="1078" href="libraries.Mainlibrary.html#1065" class="Function">Ledger</a> <a id="1085" class="Symbol">=</a> <a id="1087" href="basicDataStructure.html#387" class="Function">Address</a>  <a id="1096" class="Symbol">→</a> <a id="1098" href="libraries.Mainlibrary.html#752" class="Record">Contract</a>
-
-
-<a id="1109" class="Comment">-- the execution stack element</a>
-<a id="1140" class="Keyword">record</a> <a id="ExecStackEl"></a><a id="1147" href="libraries.Mainlibrary.html#1147" class="Record">ExecStackEl</a> <a id="1159" class="Symbol">:</a> <a id="1161" href="Agda.Primitive.html#326" class="Primitive">Set</a> <a id="1165" class="Keyword">where</a>
-  <a id="1173" class="Keyword">constructor</a> <a id="execStackEl"></a><a id="1185" href="libraries.Mainlibrary.html#1185" class="InductiveConstructor">execStackEl</a>
-  <a id="1199" class="Keyword">field</a>
-    <a id="ExecStackEl.lastCallAddress"></a><a id="1209" href="libraries.Mainlibrary.html#1209" class="Field">lastCallAddress</a> <a id="1225" class="Symbol">:</a> <a id="1227" href="basicDataStructure.html#387" class="Function">Address</a>   <a id="1237" class="Comment">-- the address which made the call to the current function call</a>
-    <a id="ExecStackEl.calledAddress"></a><a id="1305" href="libraries.Mainlibrary.html#1305" class="Field">calledAddress</a>   <a id="1321" class="Symbol">:</a> <a id="1323" href="basicDataStructure.html#387" class="Function">Address</a>   <a id="1333" class="Comment">-- is the address to which the last current function call was made from lastCallAddr</a>
-    <a id="ExecStackEl.continuation"></a><a id="1422" href="libraries.Mainlibrary.html#1422" class="Field">continuation</a>  <a id="1436" class="Symbol">:</a> <a id="1438" class="Symbol">(</a><a id="1439" href="basicDataStructure.html#488" class="Datatype">Msg</a> <a id="1443" class="Symbol">→</a> <a id="1445" href="Complex-Model.ccomand.ccommands-cresponse.html#1535" class="Datatype">SmartContractExec</a> <a id="1463" href="basicDataStructure.html#488" class="Datatype">Msg</a><a id="1466" class="Symbol">)</a> <a id="1468" class="Comment">-- continuation how to proceed once a result is returned, which depends on that result which is an element of Msg</a>
-    <a id="ExecStackEl.costCont"></a><a id="1586" href="libraries.Mainlibrary.html#1586" class="Field">costCont</a>  <a id="1596" class="Symbol">:</a> <a id="1598" href="basicDataStructure.html#488" class="Datatype">Msg</a> <a id="1602" class="Symbol">→</a> <a id="1604" href="Agda.Builtin.Nat.html#192" class="Datatype">ℕ</a> <a id="1606" class="Comment">-- Cost for continuation depending on the msg returned when the current call is finished</a>
-<a id="1695" class="Comment">-- The following two elements are only for debugging purposes so that in case of an error</a>
-    <a id="ExecStackEl.funcNameexecStackEl"></a><a id="1789" href="libraries.Mainlibrary.html#1789" class="Field">funcNameexecStackEl</a>  <a id="1810" class="Symbol">:</a> <a id="1812" href="basicDataStructure.html#172" class="Function">FunctionName</a>     <a id="1829" class="Comment">--functionanme is the name of the function which was called</a>
-
-    <a id="ExecStackEl.msgexecStackEl"></a><a id="1894" href="libraries.Mainlibrary.html#1894" class="Field">msgexecStackEl</a>       <a id="1915" class="Symbol">:</a> <a id="1917" href="basicDataStructure.html#488" class="Datatype">Msg</a> <a id="1921" class="Comment">--msg is the arguments with which this funciton was called.</a>
-<a id="1981" class="Keyword">open</a> <a id="1986" href="libraries.Mainlibrary.html#1147" class="Module">ExecStackEl</a> <a id="1998" class="Keyword">public</a>
-
-
-<a id="2007" class="Comment">-- execution stack function</a>
-<a id="ExecutionStack"></a><a id="2035" href="libraries.Mainlibrary.html#2035" class="Function">ExecutionStack</a> <a id="2050" class="Symbol">:</a> <a id="2052" href="Agda.Primitive.html#326" class="Primitive">Set</a>
-<a id="2056" href="libraries.Mainlibrary.html#2035" class="Function">ExecutionStack</a> <a id="2071" class="Symbol">=</a> <a id="2073" href="Agda.Builtin.List.html#148" class="Datatype">List</a> <a id="2078" href="libraries.Mainlibrary.html#1147" class="Record">ExecStackEl</a>
+<a id="1076" class="Keyword">open</a> <a id="1081" href="libraries.Mainlibrary.html#752" class="Module">Contract</a> <a id="1090" class="Keyword">public</a>
 
 
 
 
-<a id="2094" class="Comment">-- the state execution function</a>
-<a id="2126" class="Keyword">record</a> <a id="StateExecFun"></a><a id="2133" href="libraries.Mainlibrary.html#2133" class="Record">StateExecFun</a> <a id="2146" class="Symbol">:</a> <a id="2148" href="Agda.Primitive.html#326" class="Primitive">Set</a> <a id="2152" class="Keyword">where</a>
-  <a id="2160" class="Keyword">constructor</a> <a id="stateEF"></a><a id="2172" href="libraries.Mainlibrary.html#2172" class="InductiveConstructor">stateEF</a>
-  <a id="2182" class="Keyword">field</a>
-    <a id="StateExecFun.ledger"></a><a id="2192" href="libraries.Mainlibrary.html#2192" class="Field">ledger</a> <a id="2199" class="Symbol">:</a> <a id="2201" href="libraries.Mainlibrary.html#1065" class="Function">Ledger</a>
-    <a id="StateExecFun.executionStack"></a><a id="2212" href="libraries.Mainlibrary.html#2212" class="Field">executionStack</a> <a id="2227" class="Symbol">:</a> <a id="2229" href="libraries.Mainlibrary.html#2035" class="Function">ExecutionStack</a>
-    <a id="StateExecFun.initialAddr"></a><a id="2248" href="libraries.Mainlibrary.html#2248" class="Field">initialAddr</a> <a id="2260" class="Symbol">:</a>  <a id="2263" href="basicDataStructure.html#387" class="Function">Address</a> <a id="2271" class="Comment">-- the address which initiated everything</a>
-    <a id="StateExecFun.lastCallAddr"></a><a id="2317" href="libraries.Mainlibrary.html#2317" class="Field">lastCallAddr</a>    <a id="2333" class="Symbol">:</a> <a id="2335" href="basicDataStructure.html#387" class="Function">Address</a> <a id="2343" class="Comment">-- the address which made the call to the current function call</a>
-    <a id="StateExecFun.calledAddr"></a><a id="2411" href="libraries.Mainlibrary.html#2411" class="Field">calledAddr</a> <a id="2422" class="Symbol">:</a> <a id="2424" href="basicDataStructure.html#387" class="Function">Address</a>   <a id="2434" class="Comment">-- is the address to which the last current fucntion call was made from lastCallAddr</a>
-    <a id="StateExecFun.nextstep"></a><a id="2523" href="libraries.Mainlibrary.html#2523" class="Field">nextstep</a>  <a id="2533" class="Symbol">:</a> <a id="2535" href="Complex-Model.ccomand.ccommands-cresponse.html#1535" class="Datatype">SmartContractExec</a> <a id="2553" href="basicDataStructure.html#488" class="Datatype">Msg</a>   <a id="2559" class="Comment">-- next step in the program to be executed when</a>
-    <a id="StateExecFun.gasLeft"></a><a id="2611" href="libraries.Mainlibrary.html#2611" class="Field">gasLeft</a>   <a id="2621" class="Symbol">:</a> <a id="2623" href="Agda.Builtin.Nat.html#192" class="Datatype">ℕ</a>  <a id="2626" class="Comment">-- how much we have left in the next execution step</a>
+<a id="1101" class="Comment">--ledger</a>
+<a id="Ledger"></a><a id="1110" href="libraries.Mainlibrary.html#1110" class="Function">Ledger</a> <a id="1117" class="Symbol">:</a> <a id="1119" href="Agda.Primitive.html#326" class="Primitive">Set</a>
+<a id="1123" href="libraries.Mainlibrary.html#1110" class="Function">Ledger</a> <a id="1130" class="Symbol">=</a> <a id="1132" href="basicDataStructure.html#387" class="Function">Address</a>  <a id="1141" class="Symbol">→</a> <a id="1143" href="libraries.Mainlibrary.html#752" class="Record">Contract</a>
 
-<a id="2679" class="Comment">--these info regarding debug info :</a>
 
-    <a id="StateExecFun.funNameevalState"></a><a id="2720" href="libraries.Mainlibrary.html#2720" class="Field">funNameevalState</a> <a id="2737" class="Symbol">:</a> <a id="2739" href="basicDataStructure.html#172" class="Function">FunctionName</a>
-    <a id="StateExecFun.msgevalState"></a><a id="2756" href="libraries.Mainlibrary.html#2756" class="Field">msgevalState</a> <a id="2769" class="Symbol">:</a> <a id="2771" href="basicDataStructure.html#488" class="Datatype">Msg</a>
-<a id="2775" class="Keyword">open</a> <a id="2780" href="libraries.Mainlibrary.html#2133" class="Module">StateExecFun</a> <a id="2793" class="Keyword">public</a>
+<a id="1154" class="Comment">-- the execution stack element</a>
+<a id="1185" class="Keyword">record</a> <a id="ExecStackEl"></a><a id="1192" href="libraries.Mainlibrary.html#1192" class="Record">ExecStackEl</a> <a id="1204" class="Symbol">:</a> <a id="1206" href="Agda.Primitive.html#326" class="Primitive">Set</a> <a id="1210" class="Keyword">where</a>
+  <a id="1218" class="Keyword">constructor</a> <a id="execStackEl"></a><a id="1230" href="libraries.Mainlibrary.html#1230" class="InductiveConstructor">execStackEl</a>
+  <a id="1244" class="Keyword">field</a>
+    <a id="ExecStackEl.lastCallAddress"></a><a id="1254" href="libraries.Mainlibrary.html#1254" class="Field">lastCallAddress</a> <a id="1270" class="Symbol">:</a> <a id="1272" href="basicDataStructure.html#387" class="Function">Address</a>   <a id="1282" class="Comment">-- the address which made the call to the current function call</a>
+    <a id="ExecStackEl.calledAddress"></a><a id="1350" href="libraries.Mainlibrary.html#1350" class="Field">calledAddress</a>   <a id="1366" class="Symbol">:</a> <a id="1368" href="basicDataStructure.html#387" class="Function">Address</a>   <a id="1378" class="Comment">-- is the address to which the last current function call was made from lastCallAddr</a>
+    <a id="ExecStackEl.continuation"></a><a id="1467" href="libraries.Mainlibrary.html#1467" class="Field">continuation</a>  <a id="1481" class="Symbol">:</a> <a id="1483" class="Symbol">(</a><a id="1484" href="basicDataStructure.html#488" class="Datatype">Msg</a> <a id="1488" class="Symbol">→</a> <a id="1490" href="Complex-Model.ccomand.ccommands-cresponse.html#1514" class="Datatype">SmartContractExec</a> <a id="1508" href="basicDataStructure.html#488" class="Datatype">Msg</a><a id="1511" class="Symbol">)</a> <a id="1513" class="Comment">-- continuation how to proceed once a result is returned, which depends on that result which is an element of Msg</a>
+    <a id="ExecStackEl.costCont"></a><a id="1631" href="libraries.Mainlibrary.html#1631" class="Field">costCont</a>  <a id="1641" class="Symbol">:</a> <a id="1643" href="basicDataStructure.html#488" class="Datatype">Msg</a> <a id="1647" class="Symbol">→</a> <a id="1649" href="Agda.Builtin.Nat.html#192" class="Datatype">ℕ</a> <a id="1651" class="Comment">-- Cost for continuation depending on the msg returned when the current call is finished</a>
+<a id="1740" class="Comment">-- The following two elements are only for debugging purposes so that in case of an error</a>
+    <a id="ExecStackEl.funcNameexecStackEl"></a><a id="1834" href="libraries.Mainlibrary.html#1834" class="Field">funcNameexecStackEl</a>  <a id="1855" class="Symbol">:</a> <a id="1857" href="basicDataStructure.html#172" class="Function">FunctionName</a>     <a id="1874" class="Comment">--functionanme is the name of the function which was called</a>
+
+    <a id="ExecStackEl.msgexecStackEl"></a><a id="1939" href="libraries.Mainlibrary.html#1939" class="Field">msgexecStackEl</a>       <a id="1960" class="Symbol">:</a> <a id="1962" href="basicDataStructure.html#488" class="Datatype">Msg</a> <a id="1966" class="Comment">--msg is the arguments with which this funciton was called.</a>
+<a id="2026" class="Keyword">open</a> <a id="2031" href="libraries.Mainlibrary.html#1192" class="Module">ExecStackEl</a> <a id="2043" class="Keyword">public</a>
+
+
+<a id="2052" class="Comment">-- execution stack function</a>
+<a id="ExecutionStack"></a><a id="2080" href="libraries.Mainlibrary.html#2080" class="Function">ExecutionStack</a> <a id="2095" class="Symbol">:</a> <a id="2097" href="Agda.Primitive.html#326" class="Primitive">Set</a>
+<a id="2101" href="libraries.Mainlibrary.html#2080" class="Function">ExecutionStack</a> <a id="2116" class="Symbol">=</a> <a id="2118" href="Agda.Builtin.List.html#148" class="Datatype">List</a> <a id="2123" href="libraries.Mainlibrary.html#1192" class="Record">ExecStackEl</a>
+
+
+
+
+<a id="2139" class="Comment">-- the state execution function</a>
+<a id="2171" class="Keyword">record</a> <a id="StateExecFun"></a><a id="2178" href="libraries.Mainlibrary.html#2178" class="Record">StateExecFun</a> <a id="2191" class="Symbol">:</a> <a id="2193" href="Agda.Primitive.html#326" class="Primitive">Set</a> <a id="2197" class="Keyword">where</a>
+  <a id="2205" class="Keyword">constructor</a> <a id="stateEF"></a><a id="2217" href="libraries.Mainlibrary.html#2217" class="InductiveConstructor">stateEF</a>
+  <a id="2227" class="Keyword">field</a>
+    <a id="StateExecFun.ledger"></a><a id="2237" href="libraries.Mainlibrary.html#2237" class="Field">ledger</a> <a id="2244" class="Symbol">:</a> <a id="2246" href="libraries.Mainlibrary.html#1110" class="Function">Ledger</a>
+    <a id="StateExecFun.executionStack"></a><a id="2257" href="libraries.Mainlibrary.html#2257" class="Field">executionStack</a> <a id="2272" class="Symbol">:</a> <a id="2274" href="libraries.Mainlibrary.html#2080" class="Function">ExecutionStack</a>
+    <a id="StateExecFun.initialAddr"></a><a id="2293" href="libraries.Mainlibrary.html#2293" class="Field">initialAddr</a> <a id="2305" class="Symbol">:</a>  <a id="2308" href="basicDataStructure.html#387" class="Function">Address</a> <a id="2316" class="Comment">-- the address which initiated everything</a>
+    <a id="StateExecFun.lastCallAddr"></a><a id="2362" href="libraries.Mainlibrary.html#2362" class="Field">lastCallAddr</a>    <a id="2378" class="Symbol">:</a> <a id="2380" href="basicDataStructure.html#387" class="Function">Address</a> <a id="2388" class="Comment">-- the address which made the call to the current function call</a>
+    <a id="StateExecFun.calledAddr"></a><a id="2456" href="libraries.Mainlibrary.html#2456" class="Field">calledAddr</a> <a id="2467" class="Symbol">:</a> <a id="2469" href="basicDataStructure.html#387" class="Function">Address</a>   <a id="2479" class="Comment">-- is the address to which the last current fucntion call was made from lastCallAddr</a>
+    <a id="StateExecFun.nextstep"></a><a id="2568" href="libraries.Mainlibrary.html#2568" class="Field">nextstep</a>  <a id="2578" class="Symbol">:</a> <a id="2580" href="Complex-Model.ccomand.ccommands-cresponse.html#1514" class="Datatype">SmartContractExec</a> <a id="2598" href="basicDataStructure.html#488" class="Datatype">Msg</a>   <a id="2604" class="Comment">-- next step in the program to be executed when</a>
+    <a id="StateExecFun.gasLeft"></a><a id="2656" href="libraries.Mainlibrary.html#2656" class="Field">gasLeft</a>   <a id="2666" class="Symbol">:</a> <a id="2668" href="Agda.Builtin.Nat.html#192" class="Datatype">ℕ</a>  <a id="2671" class="Comment">-- how much we have left in the next execution step</a>
+
+<a id="2724" class="Comment">--these info regarding debug info :</a>
+
+    <a id="StateExecFun.funNameevalState"></a><a id="2765" href="libraries.Mainlibrary.html#2765" class="Field">funNameevalState</a> <a id="2782" class="Symbol">:</a> <a id="2784" href="basicDataStructure.html#172" class="Function">FunctionName</a>
+    <a id="StateExecFun.msgevalState"></a><a id="2801" href="libraries.Mainlibrary.html#2801" class="Field">msgevalState</a> <a id="2814" class="Symbol">:</a> <a id="2816" href="basicDataStructure.html#488" class="Datatype">Msg</a>
+<a id="2820" class="Keyword">open</a> <a id="2825" href="libraries.Mainlibrary.html#2178" class="Module">StateExecFun</a> <a id="2838" class="Keyword">public</a>
 
 
 </pre></body></html>

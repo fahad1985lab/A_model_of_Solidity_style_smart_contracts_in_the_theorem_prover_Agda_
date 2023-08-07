@@ -33,7 +33,7 @@ record Contract : Set where
     amount   : Amount
     fun  : FunctionName → Msg → SmartContractExec Msg  
     purefunction : FunctionName → Msg → MsgOrError  --this one will change because in ether the function no change only the variable can change
-   
+    purefunctionCost : FunctionName → Msg → ℕ   
 
 open Contract public
 

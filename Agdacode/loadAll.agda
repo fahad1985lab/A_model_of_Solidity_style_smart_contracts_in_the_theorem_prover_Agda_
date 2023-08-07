@@ -57,11 +57,6 @@ open import Simple-Model.library-simple-model.basicDataStructureWithSimpleModel
 
 open import Complex-Model.ledgerversion.Ledger-Complex-Model
 
--- do notation
-
-open import Complex-Model.ccomand.do-notation
-
-
 -- comands and response
 
 open import Complex-Model.ccomand.ccommands-cresponse
@@ -73,7 +68,7 @@ open import Complex-Model.example.votingexample-single-candidate
 
 -- Executed voting example for single candidate
 
-open import Complex-Model.example.votingexample-single-candidate
+open import Complex-Model.example.executedvotingexample-single-candidate
 
 
 
