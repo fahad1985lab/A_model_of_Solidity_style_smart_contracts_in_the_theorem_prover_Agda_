@@ -238,7 +238,7 @@ ledgerAfterVote3 : Ledger
 ledgerAfterVote3 = proj₁ resultAfterVote3
 
 
--- check the pure function with (nat 8) can vote for not
+-- check the pure function with (nat 3) can vote for not
 checkVoter3 : MsgOrError
 checkVoter3 = ledgerAfterVote3 1 .purefunction "checkVoter" (nat 3)
 -- evaluates to
@@ -256,7 +256,7 @@ checkVoter5 = ledgerAfterVote3 1 .purefunction "checkVoter" (nat 5)
 checkVoter8 : MsgOrError
 checkVoter8 = ledgerAfterVote3 1 .purefunction "checkVoter" (nat 8)
 -- evaluates to
--- theMsg (nat 1) which means false and cannot vote
+-- theMsg (nat 1) which means true and can vote
 
 
 
