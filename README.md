@@ -1,5 +1,12 @@
 # A model of the Solidity-style smart contracts in the theorem prover Agda
 
+## Agda and Agda standard library versions
+
+| Name                          | Version |
+| ------------------------------| ------------- |
+| Agda                          | `2.6.4.1`     |
+| Agda standard library version |  `2.0`        |
+
 
 ## Code in Agda
 * All Agda Code

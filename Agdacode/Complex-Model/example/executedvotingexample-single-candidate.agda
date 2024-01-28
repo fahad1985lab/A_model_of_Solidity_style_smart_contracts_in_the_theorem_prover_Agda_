@@ -112,7 +112,11 @@ checkVoter2afterAdd3 = ledgerAfterAdd3 1 .purefunction "checkVoter" (nat 2)
 -- evaluates to
 -- theMsg (nat 0) which means false because our ledger only include (nat 5) and (nat 3)
 
-
+--check counter (number of voters)
+checkCounterAfterAdd5 : MsgOrError
+checkCounterAfterAdd5 = ledgerAfterAdd5 1 .purefunction "counter" (nat 0)
+-- evaluate is
+-- theMsg (nat 0)
 
 
 

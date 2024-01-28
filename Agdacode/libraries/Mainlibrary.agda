@@ -14,7 +14,7 @@ open import Data.Maybe hiding (_>>=_)
 open import Data.String hiding (length;show)
 open import Data.Nat.Show
 open import Data.Maybe.Base as Maybe using (Maybe; nothing; _<∣>_; when)
-import Data.Maybe.Categorical as Maybe
+import Data.Maybe.Effectful
 open import Data.Product renaming (_,_ to _,,_ )
 open import Agda.Builtin.String
 
