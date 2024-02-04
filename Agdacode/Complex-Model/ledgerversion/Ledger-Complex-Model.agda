@@ -503,7 +503,7 @@ stepLedgerFunntimesList ledger initialAddr lastCallAddr calledAddr funname msg g
 
 
 -- the below is the final step and we use it to solve the return cost
-evaluateAuxfinal0' : (oldLedger : Ledger)
+evaluateAuxStep4 : (oldLedger : Ledger)
                           → (currentLedger : Ledger)
                           → (initialAddr : Address)
                           → (lastCallAddr : Address)
@@ -515,62 +515,62 @@ evaluateAuxfinal0' : (oldLedger : Ledger)
                           → (msgevalState : Msg)
                           → (cp  : OrderingLeq cost gasLeft)
                           → (Ledger × MsgOrErrorWithGas)
-evaluateAuxfinal0' oldLedger currentLedger initialAddr lastCallAddr calledAddr cost ms gasLeft funNameevalState msgevalState (leq x)
+evaluateAuxStep4 oldLedger currentLedger initialAddr lastCallAddr calledAddr cost ms gasLeft funNameevalState msgevalState (leq x)
                                =  (addWeiToLedger currentLedger initialAddr
                                    (GastoWei param (gasLeft - cost))) ,, (theMsg ms , (gasLeft - cost) gas)
 
-evaluateAuxfinal0' oldLedger currentLedger initialAddr lastCallAddr calledAddr cost returnvalue gasLeft funNameevalState msgevalState (greater x)
+evaluateAuxStep4 oldLedger currentLedger initialAddr lastCallAddr calledAddr cost returnvalue gasLeft funNameevalState msgevalState (greater x)
                                = oldLedger ,, ((err (strErr " Out Of Gass ") ⟨ lastCallAddr >> initialAddr ∙ funNameevalState [ msgevalState ]⟩) , gasLeft gas)
 
 mutual
 
-  evaluateTerminatingAuxfinal0 : Ledger
+  evaluateTerminatingAuxStep2 : Ledger
                                     → (stateEF : StateExecFun)
                                     → (numberOfSteps : ℕ)
                                     → stepEFgasAvailable stateEF ≦r numberOfSteps
                                     → Ledger × MsgOrErrorWithGas
-  evaluateTerminatingAuxfinal0 oldLedger (stateEF currentLedger [] initialAddr lastCallAddr calledAddr (return cost ms)
+  evaluateTerminatingAuxStep2 oldLedger (stateEF currentLedger [] initialAddr lastCallAddr calledAddr (return cost ms)
                               gasLeft  funNameevalState msgevalState)
                               numberOfSteps numberOfStepsLessGas
-                              = evaluateAuxfinal0' oldLedger currentLedger
+                              = evaluateAuxStep4 oldLedger currentLedger
                                   initialAddr lastCallAddr calledAddr cost ms gasLeft funNameevalState msgevalState (compareLeq cost gasLeft)
 
-  evaluateTerminatingAuxfinal0 oldLedger (stateEF currentLedger s initialAddr lastCallAddr calledAddr (error msgg debugInfo)
+  evaluateTerminatingAuxStep2 oldLedger (stateEF currentLedger s initialAddr lastCallAddr calledAddr (error msgg debugInfo)
                                gasLeft  funNameevalState msgevalState)
                                numberOfSteps numberOfStepsLessGas
                             = addWeiToLedger oldLedger initialAddr (GastoWei param gasLeft) ,,
                               (err msgg ⟨  lastCallAddr >> initialAddr ∙ funNameevalState [ msgevalState ]⟩ , gasLeft gas)
-  evaluateTerminatingAuxfinal0 oldLedger evals (suc numberOfSteps) numberOfStepsLessGas
-                             = evaluateTerminatingAuxfinal0aux oldLedger evals numberOfSteps numberOfStepsLessGas
+  evaluateTerminatingAuxStep2 oldLedger evals (suc numberOfSteps) numberOfStepsLessGas
+                             = evaluateTerminatingAuxStep3 oldLedger evals numberOfSteps numberOfStepsLessGas
                                (compareLeq (stepEFgasNeeded evals) (stepEFgasAvailable evals))
 
-  evaluateTerminatingAuxfinal0 oldLedger
+  evaluateTerminatingAuxStep2 oldLedger
                                (stateEF currentLedger executionStack initialAddr lastCallAddr calledAddr nextstep gasLeft funNameevalState msgevalState) 0 numberOfStepsLessGas
                                = oldLedger ,,  (err outOfGasError ⟨ lastCallAddr >> initialAddr ∙ funNameevalState [ msgevalState ]⟩ , 0 gas)
 
                           --
 
-  evaluateTerminatingAuxfinal0aux : Ledger
+  evaluateTerminatingAuxStep3 : Ledger
                                     → (stateEF : StateExecFun)
                                     → (numberOfSteps : ℕ)
                                     → stepEFgasAvailable stateEF ≦r suc numberOfSteps
                                     → OrderingLeq (stepEFgasNeeded stateEF) (stepEFgasAvailable stateEF)
                                     → Ledger × MsgOrErrorWithGas
-  evaluateTerminatingAuxfinal0aux oldLedger state numberOfSteps numberOfStepsLessgas (leq x)
-               = evaluateTerminatingAuxfinal0 oldLedger
+  evaluateTerminatingAuxStep3 oldLedger state numberOfSteps numberOfStepsLessgas (leq x)
+               = evaluateTerminatingAuxStep2 oldLedger
                  (deductGas (stepEF oldLedger state) (suc (stepEFgasNeeded state))) numberOfSteps
                  (lemmaxSucY (gasLeft (stepEF oldLedger state)) numberOfSteps (stepEFgasNeeded state)
                    (lemma=≦r (gasLeft (stepEF oldLedger state)) (gasLeft state) (suc numberOfSteps)
                              (lemmaStepEFpreserveGas2 oldLedger state) numberOfStepsLessgas))
 
 
-  evaluateTerminatingAuxfinal0aux oldLedger (stateEF ledger executionStack initialAddr lastCallAddr calledAddr nextstep gasLeft₁ funNameevalState msgevalState)
+  evaluateTerminatingAuxStep3 oldLedger (stateEF ledger executionStack initialAddr lastCallAddr calledAddr nextstep gasLeft₁ funNameevalState msgevalState)
                                   numberOfSteps numberOfStepsLessgas (greater x)
                                   = oldLedger ,,  (err outOfGasError ⟨ lastCallAddr >> initialAddr ∙ funNameevalState [ msgevalState ]⟩ , 0 gas)
 
 
 
-evaluateTerminatingAuxfinal : (ledger : Ledger)
+evaluateTerminatingAuxStep1 : (ledger : Ledger)
                           → (initialAddr : Address)
                           → (lastCallAddr : Address)
                           → (calledAddr : Address)
@@ -579,15 +579,15 @@ evaluateTerminatingAuxfinal : (ledger : Ledger)
                           → (gasreserved : ℕ)
                           → (cp  : OrderingLeq (GastoWei param gasreserved) (ledger initialAddr .amount))
                           → Ledger × MsgOrErrorWithGas
-evaluateTerminatingAuxfinal ledger initialAddr lastCallAddr calledAddr funname msg gasreserved  (leq leqpr)
+evaluateTerminatingAuxStep1 ledger initialAddr lastCallAddr calledAddr funname msg gasreserved  (leq leqpr)
                            = let
                                ledgerDeducted : Ledger
                                ledgerDeducted = deductGasFromLedger ledger initialAddr (GastoWei param gasreserved) leqpr
-                             in evaluateTerminatingAuxfinal0 ledgerDeducted
+                             in evaluateTerminatingAuxStep2 ledgerDeducted
                                      (stateEF ledgerDeducted [] initialAddr lastCallAddr calledAddr (ledgerDeducted calledAddr .fun funname msg)
                                      gasreserved  funname msg) gasreserved (refl≦r gasreserved)
 
-evaluateTerminatingAuxfinal ledger initialAddr lastCallAddr calledAddr funname msg gasreserved  (greater greaterpr)
+evaluateTerminatingAuxStep1 ledger initialAddr lastCallAddr calledAddr funname msg gasreserved  (greater greaterpr)
                            = ledger ,,  (err outOfGasError ⟨ lastCallAddr >> initialAddr ∙ funname [ msg ]⟩ , 0 gas)
 
 evaluateTerminatingfinal : (ledger : Ledger)
@@ -604,6 +604,6 @@ evaluateTerminatingfinal : (ledger : Ledger)
                          → (gasreserved : ℕ)
                          → Ledger × MsgOrErrorWithGas
 evaluateTerminatingfinal ledger initialAddr lastCallAddr calledAddr funname msg gasreserved
-                      =  evaluateTerminatingAuxfinal ledger initialAddr lastCallAddr calledAddr funname msg gasreserved
+                      =  evaluateTerminatingAuxStep1 ledger initialAddr lastCallAddr calledAddr funname msg gasreserved
                          (compareLeq (GastoWei param gasreserved) (ledger initialAddr .amount))
 
